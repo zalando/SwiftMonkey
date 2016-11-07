@@ -23,7 +23,7 @@ public class MonkeyPaws: NSObject, CALayerDelegate {
 
     fileprivate static var tappingTracks: [WeakReference<MonkeyPaws>] = []
 
-    init(view: UIView) {
+    public init(view: UIView) {
         super.init()
         self.view = view
 
@@ -93,7 +93,7 @@ public class MonkeyPaws: NSObject, CALayerDelegate {
         return true
     }()
     
-    func tapUIApplicationSendEvent() {
+    public func tapUIApplicationSendEvent() {
         _ = MonkeyPaws.swizzleMethods
         MonkeyPaws.tappingTracks.append(WeakReference(self))
     }
