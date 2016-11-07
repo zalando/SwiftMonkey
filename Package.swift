@@ -1,3 +1,7 @@
 import PackageDescription
 
-let package = Package(name: "SwiftMonkeyPaws")
+let package = Package(
+    name: "SwiftMonkeyPaws",
+    targets: [],
+    dependencies:[]
+)
