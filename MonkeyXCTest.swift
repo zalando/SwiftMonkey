@@ -1,0 +1,28 @@
+//
+//  MonkeyXCTest.swift
+//  Fleek
+//
+//  Created by Dag Agren on 23/03/16.
+//  Copyright © 2016 Zalando SE. All rights reserved.
+//
+//  Helper functionality using the public XCTest framework.
+//
+
+import Foundation
+import XCTest
+
+extension Monkey {
+    func addXCTestTapAlertActionWithInterval(_ interval: Int, application: XCUIApplication) {
+        addActionWithInterval(interval) { [weak self] in
+            // The test for alerts on screen and dismiss them if there are any.
+            for i in 0 ..< application.alerts.count {
+                let alert = application.alerts.element(boundBy: i)
+                let buttons = alert.descendants(matching: .button)
+                XCTAssertNotEqual(buttons.count, 0, "No buttons in alert")
+                let index = UInt(self!.r.randomUInt32() % UInt32(buttons.count))
+                let button = buttons.element(boundBy: index)
+                button.tap()
+            }
+        }
+    }
+}
