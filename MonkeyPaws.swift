@@ -6,7 +6,7 @@
 //  Copyright © 2016 Zalando SE. All rights reserved.
 //
 
-#if DEBUG
+//#if DEBUG
 
 import UIKit
 
@@ -14,7 +14,7 @@ private let maxGesturesShown: Int = 15
 private let crossRadius: CGFloat = 7
 private let circleRadius: CGFloat = 7
 
-class MonkeyPaws: NSObject, CALayerDelegate {
+public class MonkeyPaws: NSObject, CALayerDelegate {
     private var gestures: [Gesture] = []
     private weak var view: UIView?
     private var counter: Int = 0
@@ -98,7 +98,7 @@ class MonkeyPaws: NSObject, CALayerDelegate {
         MonkeyPaws.tappingTracks.append(WeakReference(self))
     }
 
-    func draw(_ layer: CALayer, in ctx: CGContext) {
+    public func draw(_ layer: CALayer, in ctx: CGContext) {
         ctx.clear(layer.bounds)
 
         UIGraphicsPushContext(ctx)
@@ -277,4 +277,4 @@ extension CGRect {
     }
 }
 
-#endif
+//#endif
