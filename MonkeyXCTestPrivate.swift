@@ -18,7 +18,7 @@ extension Monkey {
         return generatorClass.sharedGenerator()
     }
 
-    func addXCTestSingleTapActionWithWeight(_ weight: Double) {
+    public func addXCTestSingleTapActionWithWeight(_ weight: Double) {
         addActionWithWeight(weight) { [weak self] in
             let point = self!.randomPoint()
 
@@ -30,7 +30,7 @@ extension Monkey {
         }
     }
 
-    func addXCTestTapActionWithWeight(_ weight: Double, multipleTapProbability: Double = 0.05,
+    public func addXCTestTapActionWithWeight(_ weight: Double, multipleTapProbability: Double = 0.05,
     multipleTouchProbability: Double = 0.05) {
         addActionWithWeight(weight) { [weak self] in
             let numberOfTaps: Int
@@ -57,7 +57,7 @@ extension Monkey {
         }
     }
 
-    func addXCTestLongPressActionWithWeight(_ weight: Double) {
+    public func addXCTestLongPressActionWithWeight(_ weight: Double) {
         addActionWithWeight(weight) { [weak self] in
             let point = self!.randomPoint()
             let semaphore = DispatchSemaphore(value: 0)
@@ -68,7 +68,7 @@ extension Monkey {
         }
     }
 
-    func addXCTestDragActionWithWeight(_ weight: Double) {
+    public func addXCTestDragActionWithWeight(_ weight: Double) {
         addActionWithWeight(weight) { [weak self] in
             let start = self!.randomPoint()
             let end = self!.randomPoint()
@@ -81,7 +81,7 @@ extension Monkey {
         }
     }
 
-    func addXCTestPinchCloseActionWithWeight(_ weight: Double) {
+    public func addXCTestPinchCloseActionWithWeight(_ weight: Double) {
         addActionWithWeight(weight) { [weak self] in
             let rect = self!.randomRectWithSizeFraction(2)
             let scale: Double = 1 / (self!.r.randomDouble() * 4 + 1)
@@ -94,7 +94,7 @@ extension Monkey {
         }
     }
 
-    func addXCTestPinchOpenActionWithWeight(_ weight: Double) {
+    public func addXCTestPinchOpenActionWithWeight(_ weight: Double) {
         addActionWithWeight(weight) { [weak self] in
             let rect = self!.randomRectWithSizeFraction(2)
             let scale: Double = self!.r.randomDouble() * 4 + 1
@@ -107,7 +107,7 @@ extension Monkey {
         }
     }
 
-    func addXCTestRotateActionWithWeight(_ weight: Double) {
+    public func addXCTestRotateActionWithWeight(_ weight: Double) {
         addActionWithWeight(weight) { [weak self] in
             let rect = self!.randomRectWithSizeFraction(2)
             let angle = self!.r.randomDouble() * 2 * 3.141592
@@ -120,7 +120,7 @@ extension Monkey {
         }
     }
 
-    func addXCTestOrientationActionWithWeight(_ weight: Double) {
+    public func addXCTestOrientationActionWithWeight(_ weight: Double) {
         addActionWithWeight(weight) { [weak self] in
             let orientations: [UIDeviceOrientation] = [
                 .portrait,

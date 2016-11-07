@@ -18,7 +18,7 @@ public class Monkey {
     var regularActions: [(interval: Int, action: (Void) -> Void)]
     var actionCounter = 0
 
-    init(seed: UInt32, frame: CGRect) {
+    public init(seed: UInt32, frame: CGRect) {
         self.r = Random(seed: seed)
         self.frame = frame
         self.randomActions = []
@@ -26,7 +26,7 @@ public class Monkey {
         self.regularActions = []
     }
 
-    func monkeyAround() {
+    public func monkeyAround() {
         while true {
             actRandomly()
             actRegularly()
@@ -34,7 +34,7 @@ public class Monkey {
         }
     }
 
-    func actRandomly() {
+    public func actRandomly() {
         let x = r.randomDouble() * totalWeight
         for action in randomActions {
             if x < action.accumulatedWeight {
@@ -44,7 +44,7 @@ public class Monkey {
         }
     }
 
-    func actRegularly() {
+    public func actRegularly() {
         actionCounter += 1
 
         for action in regularActions {
@@ -55,32 +55,32 @@ public class Monkey {
         }
     }
 
-    func addActionWithWeight(_ weight: Double, action: @escaping (Void) -> Void) {
+    public func addActionWithWeight(_ weight: Double, action: @escaping (Void) -> Void) {
         totalWeight += weight
         randomActions.append((accumulatedWeight: totalWeight, action: action))
     }
 
-    func addActionWithInterval(_ interval: Int, action: @escaping (Void) -> Void) {
+    public func addActionWithInterval(_ interval: Int, action: @escaping (Void) -> Void) {
         regularActions.append((interval: interval, action: action))
     }
 
-    func randomPoint() -> CGPoint {
+    public func randomPoint() -> CGPoint {
         return randomPointInRect(frame)
     }
 
-    func randomPointInRect(_ rect: CGRect) -> CGPoint {
+    public func randomPointInRect(_ rect: CGRect) -> CGPoint {
         return CGPoint(x: rect.origin.x+rect.size.width*CGFloat(r.randomDouble()), y: rect.origin.y+rect.size.height*CGFloat(r.randomDouble()))
     }
 
-    func randomRect() -> CGRect {
+    public func randomRect() -> CGRect {
         return rectAroundPoint(randomPoint(), inRect: frame)
     }
 
-    func randomRectWithSizeFraction(_ sizeFraction: CGFloat) -> CGRect {
+    public func randomRectWithSizeFraction(_ sizeFraction: CGFloat) -> CGRect {
         return rectAroundPoint(randomPoint(), sizeFraction: sizeFraction, inRect: frame)
     }
 
-    func randomClusteredPoints(_ count: Int) -> [CGPoint] {
+    public func randomClusteredPoints(_ count: Int) -> [CGPoint] {
         let centre = randomPoint()
         let clusterRect = rectAroundPoint(centre, inRect: frame)
 

@@ -23,13 +23,13 @@ private let eventGenerator: UIASyntheticEvents = {
 }()
 
 extension Monkey {
-    func addUIAutomationSingleTapActionWithWeight(weight: Double) {
+    public func addUIAutomationSingleTapActionWithWeight(weight: Double) {
         addActionWithWeight(weight) { [weak self] in
             eventGenerator.sendTap(self!.randomPoint())
         }
     }
 
-    func addUIAutomationTapActionWithWeight(_ weight: Double, multipleTapProbability: Double = 0.05,
+    public func addUIAutomationTapActionWithWeight(_ weight: Double, multipleTapProbability: Double = 0.05,
     multipleTouchProbability: Double = 0.05, longPressProbability: Double = 0.05) {
         addActionWithWeight(weight) { [weak self] in
             let numberOfTaps: Int
@@ -60,7 +60,7 @@ extension Monkey {
         }
     }
 
-    func addUIAutomationDragActionWithWeight(_ weight: Double) {
+    public func addUIAutomationDragActionWithWeight(_ weight: Double) {
         addActionWithWeight(weight) { [weak self] in
             let start = self!.randomPoint()
             let end = self!.randomPoint()
@@ -68,7 +68,7 @@ extension Monkey {
         }
     }
 
-    func addUIAutomationFlickActionWithWeight(_ weight: Double) {
+    public func addUIAutomationFlickActionWithWeight(_ weight: Double) {
         addActionWithWeight(weight) { [weak self] in
             let start = self!.randomPoint()
             let end = self!.randomPoint()
@@ -76,7 +76,7 @@ extension Monkey {
         }
     }
 
-    func addUIAutomationPinchCloseActionWithWeight(_ weight: Double) {
+    public func addUIAutomationPinchCloseActionWithWeight(_ weight: Double) {
         addActionWithWeight(weight) { [weak self] in
             let start = self!.randomPoint()
             let end = self!.randomPoint()
@@ -84,7 +84,7 @@ extension Monkey {
         }
     }
 
-    func addUIAutomationPinchOpenActionWithWeight(_ weight: Double) {
+    public func addUIAutomationPinchOpenActionWithWeight(_ weight: Double) {
         addActionWithWeight(weight) { [weak self] in
             let start = self!.randomPoint()
             let end = self!.randomPoint()
@@ -92,7 +92,7 @@ extension Monkey {
         }
     }
 
-    func addUIAutomationRotateActionWithWeight(_ weight: Double) {
+    public func addUIAutomationRotateActionWithWeight(_ weight: Double) {
         // Not working for some reason.
         addActionWithWeight(weight) { [weak self] in
             let point = self!.randomPoint()
@@ -102,7 +102,7 @@ extension Monkey {
         }
     }
 
-    func addUIAutomationOrientationActionWithWeight(_ weight: Double) {
+    public func addUIAutomationOrientationActionWithWeight(_ weight: Double) {
         addActionWithWeight(weight) { [weak self] in
             let orientations: [UIDeviceOrientation] = [
                 .portrait,
@@ -121,25 +121,25 @@ extension Monkey {
         }
     }
 
-    func addUIAutomationClickVolumeUpActionWithWeight(_ weight: Double) {
+    public func addUIAutomationClickVolumeUpActionWithWeight(_ weight: Double) {
         addActionWithWeight(weight) {
             eventGenerator.clickVolumeUp()
         }
     }
 
-    func addUIAutomationClickVolumeDownActionWithWeight(_ weight: Double) {
+    public func addUIAutomationClickVolumeDownActionWithWeight(_ weight: Double) {
         addActionWithWeight(weight) {
             eventGenerator.clickVolumeDown()
         }
     }
 
-    func addUIAutomationShakeActionWithWeight(_ weight: Double) {
+    public func addUIAutomationShakeActionWithWeight(_ weight: Double) {
         addActionWithWeight(weight) {
             eventGenerator.shake()
         }
     }
 
-    func addUIAutomationLockActionWithWeight(_ weight: Double) {
+    public func addUIAutomationLockActionWithWeight(_ weight: Double) {
         addActionWithWeight(weight) { [weak self] in
             let duration = 3 * self!.r.randomDouble()
             eventGenerator.lockDevice()
