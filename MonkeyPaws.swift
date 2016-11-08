@@ -68,8 +68,9 @@ public class MonkeyPaws: NSObject, CALayerDelegate {
 
             let colour = UIColor(hue: CGFloat(fmod(Float(counter) * 0.391, 1)), saturation: 1, brightness: 0.5, alpha: 1)
             let angle = 45 * (CGFloat(fmod(Float(counter) * 0.279, 1)) * 2 - 1)
+            let mirrored = counter % 2 == 0
 
-            gestures.append(Gesture(firstPoint: point, colour: colour, angle: angle, touchHash: touch.hash))
+            gestures.append(Gesture(firstPoint: point, colour: colour, angle: angle, mirrored: mirrored, touchHash: touch.hash))
 
             counter += 1
         }
@@ -111,7 +112,7 @@ public class MonkeyPaws: NSObject, CALayerDelegate {
             gesture.colour.setStroke()
 
             let startPoint = gesture.points.first!
-            drawMonkeyHand(colour: gesture.colour, at: startPoint, content: String(gestures.count - index), angle: gesture.angle, scale: 1)
+            drawMonkeyHand(colour: gesture.colour, at: startPoint, content: String(gestures.count - index), angle: gesture.angle, scale: 1, mirrored: gesture.mirrored)
 
             if gesture.points.count >= 2 {
                 let endPoint = gesture.points.last!
@@ -127,9 +128,7 @@ public class MonkeyPaws: NSObject, CALayerDelegate {
                 ctx.saveGState()
 
                 let clipPath = UIBezierPath(rect: layer.bounds)
-                let handPath = monkeyHand()
-                handPath.apply(CGAffineTransform(rotationAngle: gesture.angle / 180 * CGFloat.pi))
-                handPath.apply(CGAffineTransform(translationX: startPoint.x, y: startPoint.y))
+                let handPath = monkeyHand(at: startPoint, angle: gesture.angle, scale: 1, mirrored: gesture.mirrored)
 
                 clipPath.append(handPath)
                 clipPath.usesEvenOddFillRule = true
@@ -161,20 +160,13 @@ public class MonkeyPaws: NSObject, CALayerDelegate {
     }
 }
 
-func drawMonkeyHand(colour: UIColor, at: CGPoint, content: String, angle: CGFloat, scale: CGFloat) {
+func drawMonkeyHand(colour: UIColor, at: CGPoint, content: String, angle: CGFloat, scale: CGFloat, mirrored: Bool) {
     let context = UIGraphicsGetCurrentContext()!
 
-    context.saveGState()
-    context.translateBy(x: at.x, y: at.y)
-    context.rotate(by: -angle * CGFloat.pi/180)
-    context.scaleBy(x: scale, y: scale)
-
-    let bezierPath = monkeyHand()
+    let handPath = monkeyHand(at: at, angle: angle, scale: 1, mirrored: mirrored)
     colour.setStroke()
-    bezierPath.lineWidth = 1
-    bezierPath.stroke()
-
-    context.restoreGState()
+    handPath.lineWidth = 1
+    handPath.stroke()
 
     context.saveGState()
     context.translateBy(x: at.x, y: at.y)
@@ -193,7 +185,7 @@ func drawMonkeyHand(colour: UIColor, at: CGPoint, content: String, angle: CGFloa
     context.restoreGState()
 }
 
-func monkeyHand() -> UIBezierPath {
+func monkeyHand(at: CGPoint, angle: CGFloat, scale: CGFloat, mirrored: Bool) -> UIBezierPath {
     let bezierPath = UIBezierPath()
     bezierPath.move(to: CGPoint(x: -5.91, y: 8.76))
     bezierPath.addCurve(to: CGPoint(x: -10.82, y: 2.15), controlPoint1: CGPoint(x: -9.18, y: 7.11), controlPoint2: CGPoint(x: -8.09, y: 4.9))
@@ -215,6 +207,16 @@ func monkeyHand() -> UIBezierPath {
     bezierPath.addCurve(to: CGPoint(x: 8.3, y: 7.11), controlPoint1: CGPoint(x: 7.76, y: 1.6), controlPoint2: CGPoint(x: 9.4, y: 4.35))
     bezierPath.addCurve(to: CGPoint(x: -5.91, y: 8.76), controlPoint1: CGPoint(x: 7.21, y: 9.86), controlPoint2: CGPoint(x: -2.63, y: 10.41))
     bezierPath.close()
+
+    bezierPath.apply(CGAffineTransform(scaleX: scale, y: scale))
+
+    if mirrored {
+        bezierPath.apply(CGAffineTransform(scaleX: -1, y: 1))
+    }
+
+    bezierPath.apply(CGAffineTransform(rotationAngle: angle / 180 * CGFloat.pi))
+
+    bezierPath.apply(CGAffineTransform(translationX: at.x, y: at.y))
 
     return bezierPath
 }
@@ -251,14 +253,16 @@ private struct Gesture {
     var points: [CGPoint]
     let colour: UIColor
     let angle: CGFloat
+    let mirrored: Bool
     var touchHash: Int?
     var ended: Bool
     var cancelled: Bool
 
-    init(firstPoint: CGPoint, colour: UIColor, angle: CGFloat, touchHash: Int) {
+    init(firstPoint: CGPoint, colour: UIColor, angle: CGFloat, mirrored: Bool, touchHash: Int) {
         self.points = [firstPoint]
         self.colour = colour
         self.angle = angle
+        self.mirrored = mirrored
         self.touchHash = touchHash
         self.ended = false
         self.cancelled = false
