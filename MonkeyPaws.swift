@@ -44,9 +44,7 @@ public class MonkeyPaws: NSObject, CALayerDelegate {
             appendTouch(touch: touch)
         }
 
-        layer.setNeedsDisplay()
-        layer.displayIfNeeded()
-        bumpLayer()
+        updateLayer()
     }
 
     func appendTouch(touch: UITouch) {
@@ -149,14 +147,20 @@ public class MonkeyPaws: NSObject, CALayerDelegate {
         UIGraphicsPopContext()
     }
 
-    func bumpLayer() {
+    func updateLayer() {
         guard let superlayer = layer.superlayer else { return }
         guard let layers = superlayer.sublayers else { return }
         guard let index = layers.index(of: layer) else { return }
+
         if index != layers.count - 1 {
             layer.removeFromSuperlayer()
             superlayer.addSublayer(layer)
         }
+
+        layer.frame = superlayer.bounds
+
+        layer.setNeedsDisplay()
+        layer.displayIfNeeded()
     }
 }
 
