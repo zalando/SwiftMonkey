@@ -19,6 +19,18 @@ framework is a good idea, but not required.
 
 To be written.
 
+### TODO
+
+- Add simplified API for sane default settings.
+- Add randomised testing using public XCTest APIs.
+  - Find clickable view and click them directly instead of
+    clicking random locations, to compensate for the slow
+    event generation.
+- Try to stabilise the event generation code.
+- Re-investigate private XCTest APIs.
+- Once Swift Package Manager has iOS support, update project
+  to support it properly.
+
 ### Contact
 
 This software is written by Dag Ågren (dag.agren@zalando.fi)
