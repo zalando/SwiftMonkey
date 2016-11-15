@@ -55,6 +55,13 @@ framework here:
 
 <https://github.bus.zalan.do/dagren/SwiftMonkeyExample>
 
+### TODO
+
+- Speed up drawing.
+- Add more customisability for the visualisation.
+- Once Swift Package Manager has iOS support, update project
+  to support it properly.
+
 ### Contact
 
 This software is written by Dag Ågren (dag.agren@zalando.fi)
