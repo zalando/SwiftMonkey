@@ -3,7 +3,8 @@
 This is a small framework that visualises all touch events in
 an iOS app, as a layer on top of your UI. This is meant to be
 paired with the [SwiftMonkey][] monkey testing library, but can
-also be used on its own.
+also be used on its own. It can be useful when debugging UI
+tests, to see where clicks are actually going.
 
 Usage is very simple: Just link the framework, the create and
 hold on to a `MonkeyPaws` object. It will automatically tap into
