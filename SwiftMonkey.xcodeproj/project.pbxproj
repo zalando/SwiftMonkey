@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C929B55F1DD0B966004B256F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C929B55E1DD0B966004B256F /* UIKit.framework */; };
+		C94326421DDB2F260038A891 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C94326411DDB2F260038A891 /* XCTest.framework */; };
 		OBJ_22 /* Monkey.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* Monkey.swift */; };
 		OBJ_23 /* MonkeyUIAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* MonkeyUIAutomation.swift */; };
 		OBJ_24 /* MonkeyXCTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* MonkeyXCTest.swift */; };
@@ -17,6 +18,9 @@
 
 /* Begin PBXFileReference section */
 		C929B55E1DD0B966004B256F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		C943263F1DDB2D130038A891 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		C94326401DDB2D130038A891 /* SwiftMonkey.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = SwiftMonkey.podspec; sourceTree = "<group>"; };
+		C94326411DDB2F260038A891 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		OBJ_10 /* MonkeyUIAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonkeyUIAutomation.swift; sourceTree = "<group>"; };
 		OBJ_11 /* MonkeyXCTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonkeyXCTest.swift; sourceTree = "<group>"; };
 		OBJ_12 /* MonkeyXCTestPrivate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonkeyXCTestPrivate.swift; sourceTree = "<group>"; };
@@ -31,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 0;
 			files = (
+				C94326421DDB2F260038A891 /* XCTest.framework in Frameworks */,
 				C929B55F1DD0B966004B256F /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -41,6 +46,7 @@
 		C929B55D1DD0B966004B256F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C94326411DDB2F260038A891 /* XCTest.framework */,
 				C929B55E1DD0B966004B256F /* UIKit.framework */,
 			);
 			name = Frameworks;
@@ -61,16 +67,17 @@
 			name = Products;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
+				C943263F1DDB2D130038A891 /* README.md */,
 				OBJ_6 /* Package.swift */,
+				C94326401DDB2D130038A891 /* SwiftMonkey.podspec */,
 				OBJ_7 /* Sources */,
 				OBJ_14 /* Tests */,
 				OBJ_15 /* Products */,
 				C929B55D1DD0B966004B256F /* Frameworks */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_7 /* Sources */ = {
@@ -128,7 +135,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_15 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
