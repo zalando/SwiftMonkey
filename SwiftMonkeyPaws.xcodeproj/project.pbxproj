@@ -13,6 +13,8 @@
 
 /* Begin PBXFileReference section */
 		C929B55B1DD0B7C9004B256F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		C943263D1DDB123A0038A891 /* SwiftMonkeyPaws.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = SwiftMonkeyPaws.podspec; sourceTree = "<group>"; };
+		C943263E1DDB160C0038A891 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		OBJ_12 /* SwiftMonkeyPaws.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftMonkeyPaws.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		OBJ_9 /* MonkeyPaws.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonkeyPaws.swift; sourceTree = "<group>"; };
@@ -56,7 +58,9 @@
 		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
+				C943263E1DDB160C0038A891 /* README.md */,
 				OBJ_6 /* Package.swift */,
+				C943263D1DDB123A0038A891 /* SwiftMonkeyPaws.podspec */,
 				OBJ_7 /* Sources */,
 				OBJ_10 /* Tests */,
 				OBJ_11 /* Products */,

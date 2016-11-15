@@ -6,8 +6,6 @@
 //  Copyright © 2016 Zalando SE. All rights reserved.
 //
 
-//#if DEBUG
-
 import UIKit
 
 private let maxGesturesShown: Int = 15
@@ -23,7 +21,7 @@ public class MonkeyPaws: NSObject, CALayerDelegate {
 
     fileprivate static var tappingTracks: [WeakReference<MonkeyPaws>] = []
 
-    public init(view: UIView) {
+    public init(view: UIView, tapUIApplication: Bool = true) {
         super.init()
         self.view = view
 
@@ -34,20 +32,24 @@ public class MonkeyPaws: NSObject, CALayerDelegate {
         layer.rasterizationScale = UIScreen.main.scale
 
         view.layer.addSublayer(layer)
+
+        if tapUIApplication {
+            tapUIApplicationSendEvent()
+        }
     }
 
-    func appendEvent(event: UIEvent) {
+    func append(event: UIEvent) {
         guard event.type == .touches else { return }
         guard let touches = event.allTouches else { return }
 
         for touch in touches {
-            appendTouch(touch: touch)
+            append(touch: touch)
         }
 
         updateLayer()
     }
 
-    func appendTouch(touch: UITouch) {
+    func append(touch: UITouch) {
         guard let view = view else { return }
 
         let touchHash = touch.hash
@@ -98,7 +100,7 @@ public class MonkeyPaws: NSObject, CALayerDelegate {
         return true
     }()
     
-    public func tapUIApplicationSendEvent() {
+    private func tapUIApplicationSendEvent() {
         _ = MonkeyPaws.swizzleMethods
         MonkeyPaws.tappingTracks.append(WeakReference(self))
     }
@@ -153,7 +155,7 @@ public class MonkeyPaws: NSObject, CALayerDelegate {
         UIGraphicsPopContext()
     }
 
-    func updateLayer() {
+    private func updateLayer() {
         guard let superlayer = layer.superlayer else { return }
         guard let layers = superlayer.sublayers else { return }
         guard let index = layers.index(of: layer) else { return }
@@ -251,7 +253,7 @@ extension UIApplication {
     func monkey_sendEvent(_ event: UIEvent) {
         for weakTrack in MonkeyPaws.tappingTracks {
             if let track = weakTrack.value {
-                track.appendEvent(event: event)
+                track.append(event: event)
             }
         }
 
@@ -290,5 +292,3 @@ extension CGRect {
         self.size = size
     }
 }
-
-//#endif
