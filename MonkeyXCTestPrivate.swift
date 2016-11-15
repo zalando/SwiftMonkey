@@ -18,8 +18,8 @@ extension Monkey {
         return generatorClass.sharedGenerator()
     }
 
-    public func addXCTestSingleTapActionWithWeight(_ weight: Double) {
-        addActionWithWeight(weight) { [weak self] in
+    public func addXCTestSingleTapAction(weight: Double) {
+        addAction(weight: weight) { [weak self] in
             let point = self!.randomPoint()
 
             let semaphore = DispatchSemaphore(value: 0)
@@ -30,9 +30,9 @@ extension Monkey {
         }
     }
 
-    public func addXCTestTapActionWithWeight(_ weight: Double, multipleTapProbability: Double = 0.05,
+    public func addXCTestTapAction(weight: Double, multipleTapProbability: Double = 0.05,
     multipleTouchProbability: Double = 0.05) {
-        addActionWithWeight(weight) { [weak self] in
+        addAction(weight: weight) { [weak self] in
             let numberOfTaps: Int
             if self!.r.randomDouble()<multipleTapProbability {
                 numberOfTaps = Int(self!.r.randomUInt32() % 2) + 2
@@ -57,8 +57,8 @@ extension Monkey {
         }
     }
 
-    public func addXCTestLongPressActionWithWeight(_ weight: Double) {
-        addActionWithWeight(weight) { [weak self] in
+    public func addXCTestLongPressAction(weight: Double) {
+        addAction(weight: weight) { [weak self] in
             let point = self!.randomPoint()
             let semaphore = DispatchSemaphore(value: 0)
             _ = self!.sharedXCEventGenerator.pressAtPoint(point, forDuration: 0.5, orientation: orientationValue) {
@@ -68,8 +68,8 @@ extension Monkey {
         }
     }
 
-    public func addXCTestDragActionWithWeight(_ weight: Double) {
-        addActionWithWeight(weight) { [weak self] in
+    public func addXCTestDragAction(weight: Double) {
+        addAction(weight: weight) { [weak self] in
             let start = self!.randomPoint()
             let end = self!.randomPoint()
 
@@ -81,9 +81,9 @@ extension Monkey {
         }
     }
 
-    public func addXCTestPinchCloseActionWithWeight(_ weight: Double) {
-        addActionWithWeight(weight) { [weak self] in
-            let rect = self!.randomRectWithSizeFraction(2)
+    public func addXCTestPinchCloseAction(weight: Double) {
+        addAction(weight: weight) { [weak self] in
+            let rect = self!.randomRect(sizeFraction: 2)
             let scale: Double = 1 / (self!.r.randomDouble() * 4 + 1)
 
             let semaphore = DispatchSemaphore(value: 0)
@@ -94,9 +94,9 @@ extension Monkey {
         }
     }
 
-    public func addXCTestPinchOpenActionWithWeight(_ weight: Double) {
-        addActionWithWeight(weight) { [weak self] in
-            let rect = self!.randomRectWithSizeFraction(2)
+    public func addXCTestPinchOpenAction(weight: Double) {
+        addAction(weight: weight) { [weak self] in
+            let rect = self!.randomRect(sizeFraction: 2)
             let scale: Double = self!.r.randomDouble() * 4 + 1
 
             let semaphore = DispatchSemaphore(value: 0)
@@ -107,9 +107,9 @@ extension Monkey {
         }
     }
 
-    public func addXCTestRotateActionWithWeight(_ weight: Double) {
-        addActionWithWeight(weight) { [weak self] in
-            let rect = self!.randomRectWithSizeFraction(2)
+    public func addXCTestRotateAction(weight: Double) {
+        addAction(weight: weight) { [weak self] in
+            let rect = self!.randomRect(sizeFraction: 2)
             let angle = self!.r.randomDouble() * 2 * 3.141592
 
             let semaphore = DispatchSemaphore(value: 0)
@@ -120,8 +120,8 @@ extension Monkey {
         }
     }
 
-    public func addXCTestOrientationActionWithWeight(_ weight: Double) {
-        addActionWithWeight(weight) { [weak self] in
+    public func addXCTestOrientationAction(weight: Double) {
+        addAction(weight: weight) { [weak self] in
             let orientations: [UIDeviceOrientation] = [
                 .portrait,
                 .portraitUpsideDown,

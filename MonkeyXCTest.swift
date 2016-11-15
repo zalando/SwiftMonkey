@@ -13,7 +13,7 @@ import XCTest
 
 extension Monkey {
     public func addXCTestTapAlertActionWithInterval(_ interval: Int, application: XCUIApplication) {
-        addActionWithInterval(interval) { [weak self] in
+        addAction(interval: interval) { [weak self] in
             // The test for alerts on screen and dismiss them if there are any.
             for i in 0 ..< application.alerts.count {
                 let alert = application.alerts.element(boundBy: i)
