@@ -13,9 +13,9 @@
 		C929B53C1DD0A764004B256F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C929B53A1DD0A764004B256F /* Main.storyboard */; };
 		C929B53E1DD0A764004B256F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C929B53D1DD0A764004B256F /* Assets.xcassets */; };
 		C929B5411DD0A764004B256F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C929B53F1DD0A764004B256F /* LaunchScreen.storyboard */; };
-		C929B54C1DD0A764004B256F /* SwiftMonkeyExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C929B54B1DD0A764004B256F /* SwiftMonkeyExampleUITests.swift */; };
-		C929B58E1DD0CDC2004B256F /* SwiftMonkeyPaws.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C929B58D1DD0CD89004B256F /* SwiftMonkeyPaws.framework */; };
-		C929B58F1DD0CDC2004B256F /* SwiftMonkeyPaws.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C929B58D1DD0CD89004B256F /* SwiftMonkeyPaws.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C929B54C1DD0A764004B256F /* MonkeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C929B54B1DD0A764004B256F /* MonkeyTests.swift */; };
+		C943265C1DDB396E0038A891 /* SwiftMonkeyPaws.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C943265B1DDB39260038A891 /* SwiftMonkeyPaws.framework */; };
+		C943265D1DDB396E0038A891 /* SwiftMonkeyPaws.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C943265B1DDB39260038A891 /* SwiftMonkeyPaws.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,21 +26,21 @@
 			remoteGlobalIDString = C929B5301DD0A764004B256F;
 			remoteInfo = SwiftMonkeyExample;
 		};
-		C929B5791DD0CD2D004B256F /* PBXContainerItemProxy */ = {
+		C94326551DDB39170038A891 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C929B5621DD0C4A1004B256F /* SwiftMonkey.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = OBJ_16;
 			remoteInfo = SwiftMonkey;
 		};
-		C929B58C1DD0CD89004B256F /* PBXContainerItemProxy */ = {
+		C943265A1DDB39260038A891 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C929B5881DD0CD89004B256F /* SwiftMonkeyPaws.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = OBJ_12;
 			remoteInfo = SwiftMonkeyPaws;
 		};
-		C929B5901DD0CDC3004B256F /* PBXContainerItemProxy */ = {
+		C943265E1DDB396E0038A891 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C929B5881DD0CD89004B256F /* SwiftMonkeyPaws.xcodeproj */;
 			proxyType = 1;
@@ -56,7 +56,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C929B58F1DD0CDC2004B256F /* SwiftMonkeyPaws.framework in Embed Frameworks */,
+				C943265D1DDB396E0038A891 /* SwiftMonkeyPaws.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -73,10 +73,11 @@
 		C929B5401DD0A764004B256F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C929B5421DD0A764004B256F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C929B5471DD0A764004B256F /* SwiftMonkeyExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftMonkeyExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C929B54B1DD0A764004B256F /* SwiftMonkeyExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMonkeyExampleUITests.swift; sourceTree = "<group>"; };
+		C929B54B1DD0A764004B256F /* MonkeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonkeyTests.swift; sourceTree = "<group>"; };
 		C929B54D1DD0A764004B256F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C929B5621DD0C4A1004B256F /* SwiftMonkey.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftMonkey.xcodeproj; path = "Packages/SwiftMonkey-0.0.2/SwiftMonkey.xcodeproj"; sourceTree = "<group>"; };
-		C929B5881DD0CD89004B256F /* SwiftMonkeyPaws.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftMonkeyPaws.xcodeproj; path = "Packages/SwiftMonkeyPaws-0.0.2/SwiftMonkeyPaws.xcodeproj"; sourceTree = SOURCE_ROOT; };
+		C929B5621DD0C4A1004B256F /* SwiftMonkey.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftMonkey.xcodeproj; path = Packages/SwiftMonkey/SwiftMonkey.xcodeproj; sourceTree = "<group>"; };
+		C929B5881DD0CD89004B256F /* SwiftMonkeyPaws.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftMonkeyPaws.xcodeproj; path = Packages/SwiftMonkeyPaws/SwiftMonkeyPaws.xcodeproj; sourceTree = SOURCE_ROOT; };
+		C94326511DDB34200038A891 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,7 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C929B58E1DD0CDC2004B256F /* SwiftMonkeyPaws.framework in Frameworks */,
+				C943265C1DDB396E0038A891 /* SwiftMonkeyPaws.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,6 +102,7 @@
 		C929B5281DD0A764004B256F = {
 			isa = PBXGroup;
 			children = (
+				C94326511DDB34200038A891 /* README.md */,
 				C929B5331DD0A764004B256F /* App */,
 				C929B54A1DD0A764004B256F /* AppTests */,
 				C929B5321DD0A764004B256F /* Products */,
@@ -135,24 +137,24 @@
 		C929B54A1DD0A764004B256F /* AppTests */ = {
 			isa = PBXGroup;
 			children = (
-				C929B54B1DD0A764004B256F /* SwiftMonkeyExampleUITests.swift */,
+				C929B54B1DD0A764004B256F /* MonkeyTests.swift */,
 				C929B54D1DD0A764004B256F /* Info.plist */,
 			);
 			path = AppTests;
 			sourceTree = "<group>";
 		};
-		C929B5761DD0CD2D004B256F /* Products */ = {
+		C94326521DDB39160038A891 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C929B57A1DD0CD2D004B256F /* SwiftMonkey.framework */,
+				C94326561DDB39170038A891 /* SwiftMonkey.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		C929B5891DD0CD89004B256F /* Products */ = {
+		C94326571DDB39260038A891 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C929B58D1DD0CD89004B256F /* SwiftMonkeyPaws.framework */,
+				C943265B1DDB39260038A891 /* SwiftMonkeyPaws.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -172,7 +174,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				C929B5911DD0CDC3004B256F /* PBXTargetDependency */,
+				C943265F1DDB396E0038A891 /* PBXTargetDependency */,
 			);
 			name = SwiftMonkeyExample;
 			productName = SwiftMonkeyExample;
@@ -233,11 +235,11 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = C929B5761DD0CD2D004B256F /* Products */;
+					ProductGroup = C94326521DDB39160038A891 /* Products */;
 					ProjectRef = C929B5621DD0C4A1004B256F /* SwiftMonkey.xcodeproj */;
 				},
 				{
-					ProductGroup = C929B5891DD0CD89004B256F /* Products */;
+					ProductGroup = C94326571DDB39260038A891 /* Products */;
 					ProjectRef = C929B5881DD0CD89004B256F /* SwiftMonkeyPaws.xcodeproj */;
 				},
 			);
@@ -250,18 +252,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		C929B57A1DD0CD2D004B256F /* SwiftMonkey.framework */ = {
+		C94326561DDB39170038A891 /* SwiftMonkey.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = SwiftMonkey.framework;
-			remoteRef = C929B5791DD0CD2D004B256F /* PBXContainerItemProxy */;
+			remoteRef = C94326551DDB39170038A891 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		C929B58D1DD0CD89004B256F /* SwiftMonkeyPaws.framework */ = {
+		C943265B1DDB39260038A891 /* SwiftMonkeyPaws.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = SwiftMonkeyPaws.framework;
-			remoteRef = C929B58C1DD0CD89004B256F /* PBXContainerItemProxy */;
+			remoteRef = C943265A1DDB39260038A891 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -301,7 +303,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C929B54C1DD0A764004B256F /* SwiftMonkeyExampleUITests.swift in Sources */,
+				C929B54C1DD0A764004B256F /* MonkeyTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,10 +315,10 @@
 			target = C929B5301DD0A764004B256F /* SwiftMonkeyExample */;
 			targetProxy = C929B5481DD0A764004B256F /* PBXContainerItemProxy */;
 		};
-		C929B5911DD0CDC3004B256F /* PBXTargetDependency */ = {
+		C943265F1DDB396E0038A891 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SwiftMonkeyPaws;
-			targetProxy = C929B5901DD0CDC3004B256F /* PBXContainerItemProxy */;
+			targetProxy = C943265E1DDB396E0038A891 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
