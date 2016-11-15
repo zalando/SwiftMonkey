@@ -58,8 +58,14 @@ public class MonkeyPaws: NSObject, CALayerDelegate {
         })
 
         if let index = index {
-            if touch.phase == .ended { gestures[index].ended = true; gestures[index].touchHash = nil }
-            if touch.phase == .cancelled { gestures[index].cancelled = true; gestures[index].touchHash = nil }
+            if touch.phase == .ended {
+                gestures[index].ended = true
+                gestures[index].touchHash = nil
+            }
+            if touch.phase == .cancelled {
+                gestures[index].cancelled = true
+                gestures[index].touchHash = nil
+            }
             gestures[index].points.append(point)
         } else {
             if gestures.count > maxGesturesShown { gestures.removeFirst() }
