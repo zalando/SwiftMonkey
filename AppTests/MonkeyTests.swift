@@ -13,7 +13,7 @@ class SwiftMonkeyExampleUITests: XCTestCase {
         
     override func setUp() {
         super.setUp()
-                XCUIApplication().launch()
+        XCUIApplication().launch()
     }
     
     override func tearDown() {
@@ -21,7 +21,6 @@ class SwiftMonkeyExampleUITests: XCTestCase {
     }
     
     func testMonkey() {
-        let useUIAutomation = true
         let application = XCUIApplication()
 
         // Workaround for bug in Xcode 7.3. Snapshots are not properly updated
@@ -30,47 +29,23 @@ class SwiftMonkeyExampleUITests: XCTestCase {
         // TODO: Remove this when the Xcode bug is fixed!
         _ = application.descendants(matching: .any).element(boundBy: 0).frame
 
-        let monkey = Monkey(seed: 0, frame: application.frame)
+        // Initialise the monkey tester with the current device
+        // frame. Giving an explicit seed will make it generate
+        // the same sequence of events on each run, and leaving it
+        // out will generate a new sequence on each run.
+        let monkey = Monkey(frame: application.frame)
 
-        if useUIAutomation {
-/*            monkey.addUIAutomationTapActionWithWeight(500)
-            monkey.addUIAutomationDragActionWithWeight(1)
-            monkey.addUIAutomationFlickActionWithWeight(1)
-            monkey.addUIAutomationPinchCloseActionWithWeight(10)
-            monkey.addUIAutomationPinchOpenActionWithWeight(10)
-            monkey.addUIAutomationOrientationActionWithWeight(1)
-            monkey.addUIAutomationClickVolumeUpActionWithWeight(1)
-            monkey.addUIAutomationClickVolumeDownActionWithWeight(1)
-            monkey.addUIAutomationShakeActionWithWeight(1)
-            monkey.addUIAutomationLockActionWithWeight(1)*/
+        // Use either one of these but maybe not both.
+        // XCTest private actions seem to work better at the moment.
+        monkey.addDefaultXCTestPrivateActions()
+        //monkey.addDefaultUIAutomationActions()
 
-            monkey.addUIAutomationTapActionWithWeight(50)
-            monkey.addUIAutomationDragActionWithWeight(1)
-            monkey.addUIAutomationFlickActionWithWeight(1)
-            monkey.addUIAutomationPinchCloseActionWithWeight(1)
-            monkey.addUIAutomationPinchOpenActionWithWeight(1)
-            //monkey.addUIAutomationRotateActionWithWeight(1)
-            monkey.addUIAutomationOrientationActionWithWeight(1)
-            monkey.addUIAutomationClickVolumeUpActionWithWeight(1)
-            monkey.addUIAutomationClickVolumeDownActionWithWeight(1)
-            monkey.addUIAutomationShakeActionWithWeight(1)
-            monkey.addUIAutomationLockActionWithWeight(1)
-        } else {
-            //monkey.addXCTestSingleTapActionWithWeight(50)
-            monkey.addXCTestTapActionWithWeight(50)
-            monkey.addXCTestLongPressActionWithWeight(1)
-            monkey.addXCTestDragActionWithWeight(1)
-            monkey.addXCTestPinchCloseActionWithWeight(1)
-            monkey.addXCTestPinchOpenActionWithWeight(1)
-            monkey.addXCTestRotateActionWithWeight(1)
-            //monkey.addXCTestOrientationActionWithWeight(1)
+        // Occasionally, use the regular XCTest functionality
+        // to check if an alert is shown, and click a random
+        // button on it.
+        monkey.addXCTestTapAlertAction(interval: 100, application: application)
 
-//            monkey.addXCTestTapActionWithWeight(1)
-//            monkey.addXCTestDragActionWithWeight(1)
-        }
-
-        monkey.addXCTestTapAlertActionWithInterval(100, application: application)
-
+        // Run the monkey test indefinitely.
         monkey.monkeyAround()
     }
     

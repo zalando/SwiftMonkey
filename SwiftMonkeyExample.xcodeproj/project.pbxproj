@@ -8,14 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		C929B5351DD0A764004B256F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C929B5341DD0A764004B256F /* AppDelegate.swift */; };
-		C929B5371DD0A764004B256F /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C929B5361DD0A764004B256F /* FirstViewController.swift */; };
-		C929B5391DD0A764004B256F /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C929B5381DD0A764004B256F /* SecondViewController.swift */; };
+		C929B5371DD0A764004B256F /* ClickyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C929B5361DD0A764004B256F /* ClickyViewController.swift */; };
+		C929B5391DD0A764004B256F /* BananaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C929B5381DD0A764004B256F /* BananaViewController.swift */; };
 		C929B53C1DD0A764004B256F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C929B53A1DD0A764004B256F /* Main.storyboard */; };
 		C929B53E1DD0A764004B256F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C929B53D1DD0A764004B256F /* Assets.xcassets */; };
 		C929B5411DD0A764004B256F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C929B53F1DD0A764004B256F /* LaunchScreen.storyboard */; };
 		C929B54C1DD0A764004B256F /* MonkeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C929B54B1DD0A764004B256F /* MonkeyTests.swift */; };
 		C943265C1DDB396E0038A891 /* SwiftMonkeyPaws.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C943265B1DDB39260038A891 /* SwiftMonkeyPaws.framework */; };
 		C943265D1DDB396E0038A891 /* SwiftMonkeyPaws.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C943265B1DDB39260038A891 /* SwiftMonkeyPaws.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C94326601DDB3D900038A891 /* SwiftMonkey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C94326561DDB39170038A891 /* SwiftMonkey.framework */; };
+		C9CB3B761DDB6204001C561B /* SwiftMonkey.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C94326561DDB39170038A891 /* SwiftMonkey.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +49,13 @@
 			remoteGlobalIDString = OBJ_13;
 			remoteInfo = SwiftMonkeyPaws;
 		};
+		C94326611DDB3D9B0038A891 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C929B5621DD0C4A1004B256F /* SwiftMonkey.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = OBJ_17;
+			remoteInfo = SwiftMonkey;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -61,13 +70,23 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C9CB3B751DDB61F6001C561B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				C9CB3B761DDB6204001C561B /* SwiftMonkey.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		C929B5311DD0A764004B256F /* SwiftMonkeyExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftMonkeyExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C929B5341DD0A764004B256F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C929B5361DD0A764004B256F /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		C929B5381DD0A764004B256F /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		C929B5361DD0A764004B256F /* ClickyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClickyViewController.swift; sourceTree = "<group>"; };
+		C929B5381DD0A764004B256F /* BananaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BananaViewController.swift; sourceTree = "<group>"; };
 		C929B53B1DD0A764004B256F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C929B53D1DD0A764004B256F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C929B5401DD0A764004B256F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -93,6 +112,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C94326601DDB3D900038A891 /* SwiftMonkey.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,8 +144,8 @@
 			isa = PBXGroup;
 			children = (
 				C929B5341DD0A764004B256F /* AppDelegate.swift */,
-				C929B5361DD0A764004B256F /* FirstViewController.swift */,
-				C929B5381DD0A764004B256F /* SecondViewController.swift */,
+				C929B5361DD0A764004B256F /* ClickyViewController.swift */,
+				C929B5381DD0A764004B256F /* BananaViewController.swift */,
 				C929B53A1DD0A764004B256F /* Main.storyboard */,
 				C929B53D1DD0A764004B256F /* Assets.xcassets */,
 				C929B53F1DD0A764004B256F /* LaunchScreen.storyboard */,
@@ -188,10 +208,12 @@
 				C929B5431DD0A764004B256F /* Sources */,
 				C929B5441DD0A764004B256F /* Frameworks */,
 				C929B5451DD0A764004B256F /* Resources */,
+				C9CB3B751DDB61F6001C561B /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				C94326621DDB3D9B0038A891 /* PBXTargetDependency */,
 				C929B5491DD0A764004B256F /* PBXTargetDependency */,
 			);
 			name = SwiftMonkeyExampleUITests;
@@ -293,9 +315,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C929B5391DD0A764004B256F /* SecondViewController.swift in Sources */,
+				C929B5391DD0A764004B256F /* BananaViewController.swift in Sources */,
 				C929B5351DD0A764004B256F /* AppDelegate.swift in Sources */,
-				C929B5371DD0A764004B256F /* FirstViewController.swift in Sources */,
+				C929B5371DD0A764004B256F /* ClickyViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +341,11 @@
 			isa = PBXTargetDependency;
 			name = SwiftMonkeyPaws;
 			targetProxy = C943265E1DDB396E0038A891 /* PBXContainerItemProxy */;
+		};
+		C94326621DDB3D9B0038A891 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftMonkey;
+			targetProxy = C94326611DDB3D9B0038A891 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
