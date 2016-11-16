@@ -14,9 +14,19 @@ import XCTest
 var orientationValue: UIDeviceOrientation = .portrait
 
 extension Monkey {
-    var sharedXCEventGenerator: XCEventGenerator {
+    private var sharedXCEventGenerator: XCEventGenerator {
         let generatorClass = unsafeBitCast(NSClassFromString("XCEventGenerator"),to: XCEventGenerator.Type.self)
         return generatorClass.sharedGenerator()
+    }
+
+    public func addDefaultXCTestPrivateActions() {
+        addXCTestTapAction(weight: 25)
+        addXCTestLongPressAction(weight: 1)
+        addXCTestDragAction(weight: 1)
+        addXCTestPinchCloseAction(weight: 1)
+        addXCTestPinchOpenAction(weight: 1)
+        addXCTestRotateAction(weight: 1)
+        //addXCTestOrientationAction(weight: 1) // TODO: Investigate why this does not work.
     }
 
     public func addXCTestTapAction(weight: Double, multipleTapProbability: Double = 0.05,

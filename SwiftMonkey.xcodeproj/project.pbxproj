@@ -92,9 +92,9 @@
 			isa = PBXGroup;
 			children = (
 				OBJ_9 /* Monkey.swift */,
-				OBJ_10 /* MonkeyUIAutomation.swift */,
 				OBJ_11 /* MonkeyXCTest.swift */,
 				OBJ_12 /* MonkeyXCTestPrivate.swift */,
+				OBJ_10 /* MonkeyUIAutomation.swift */,
 				OBJ_13 /* Random.swift */,
 			);
 			name = SwiftMonkey;

@@ -23,7 +23,21 @@ private let eventGenerator: UIASyntheticEvents = {
 }()
 
 extension Monkey {
-    public func addUIAutomationSingleTapActionWithWeight(weight: Double) {
+    public func addDefaultUIAutomationActions() {
+        addUIAutomationTapAction(weight: 50)
+        addUIAutomationDragAction(weight: 1)
+        addUIAutomationFlickAction(weight: 1)
+        addUIAutomationPinchCloseAction(weight: 1)
+        addUIAutomationPinchOpenAction(weight: 1)
+        //addUIAutomationRotateAction(weight: 1) // TODO: Investigate why this is broken.
+        addUIAutomationOrientationAction(weight: 1)
+        addUIAutomationClickVolumeUpAction(weight: 1)
+        addUIAutomationClickVolumeDownAction(weight: 1)
+        addUIAutomationShakeAction(weight: 1)
+        addUIAutomationLockAction(weight: 1)
+    }
+
+    public func addUIAutomationSingleTapAction(weight: Double) {
         addAction(weight: weight) { [weak self] in
             eventGenerator.sendTap(self!.randomPoint())
         }

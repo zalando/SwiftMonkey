@@ -26,8 +26,6 @@ To be written.
   - Find clickable view and click them directly instead of
     clicking random locations, to compensate for the slow
     event generation.
-- Try to stabilise the event generation code.
-- Re-investigate private XCTest APIs.
 - Once Swift Package Manager has iOS support, update project
   to support it properly.
 

@@ -18,6 +18,12 @@ public class Monkey {
     var regularActions: [(interval: Int, action: (Void) -> Void)]
     var actionCounter = 0
 
+    public convenience init(frame: CGRect) {
+        let time = Date().timeIntervalSinceReferenceDate
+        let seed = UInt32(UInt64(time * 1000) & 0xffffffff)
+        self.init(seed: seed, frame: frame)
+    }
+
     public init(seed: UInt32, frame: CGRect) {
         self.r = Random(seed: seed)
         self.frame = frame
