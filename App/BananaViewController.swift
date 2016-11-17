@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BananaViewController: UIViewController {
+class BananaViewController: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var banana: UILabel?
 
     var offset: CGPoint = CGPoint.zero
@@ -37,6 +37,11 @@ class BananaViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+
+    func gestureRecognizer(_ recognizer: UIGestureRecognizer,
+    shouldRecognizeSimultaneouslyWith otherRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 
     var startOffset: CGPoint = CGPoint.zero

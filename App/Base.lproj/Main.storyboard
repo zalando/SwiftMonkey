@@ -424,21 +424,25 @@
                 <rotationGestureRecognizer id="4Vg-YI-Jpe">
                     <connections>
                         <action selector="rotatedWithRecogniser:" destination="8rJ-Kc-sve" id="s2N-jL-TAE"/>
+                        <outlet property="delegate" destination="8rJ-Kc-sve" id="U7o-n4-IiE"/>
                     </connections>
                 </rotationGestureRecognizer>
                 <pinchGestureRecognizer id="txi-wx-BC5">
                     <connections>
                         <action selector="pinchedWithRecogniser:" destination="8rJ-Kc-sve" id="APx-Dq-nTe"/>
+                        <outlet property="delegate" destination="8rJ-Kc-sve" id="mk4-hQ-OwG"/>
                     </connections>
                 </pinchGestureRecognizer>
                 <panGestureRecognizer minimumNumberOfTouches="1" id="7dy-14-wlO">
                     <connections>
                         <action selector="pannedWithRecogniser:" destination="8rJ-Kc-sve" id="NGT-mm-H1D"/>
+                        <outlet property="delegate" destination="8rJ-Kc-sve" id="TiG-8A-IMY"/>
                     </connections>
                 </panGestureRecognizer>
                 <tapGestureRecognizer id="wE3-ST-vAr">
                     <connections>
                         <action selector="bananaTappedWithRecogniser:" destination="8rJ-Kc-sve" id="Hhb-IQ-iXQ"/>
+                        <outlet property="delegate" destination="8rJ-Kc-sve" id="t81-s3-MaL"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
