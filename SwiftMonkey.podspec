@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "SwiftMonkey"
-  s.version      = "0.1.0"
+  s.version      = "0.2.0"
   s.summary      = "Monkey testing framework for iOS apps"
   s.description  = <<-DESC
                    A framework for generating randomised user
@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.social_media_url = "http://twitter.com/WAHa_06x36"
   s.platform     = :ios, '9.0'
   s.source       = { :git => "git@github.bus.zalan.do:dagren/SwiftMonkey.git", :tag => "#{s.version}" }
-  s.source_files = "*.swift"
-  s.exclude_files = "Package.swift"
-  s.framework    = 'XCTest'
+  s.source_files = "SwiftMonkey/*.swift"
+  s.exclude_files = "SwiftMonkey/Package.swift"
+  s.framework    = "XCTest"
 end
