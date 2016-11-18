@@ -64,13 +64,13 @@ your main app and test targets are named "App" and "Tests", you
 can use something like this in your `Podfile`:
 
 ````ruby
-    target "App" do
-        pod "SwiftMonkeyPaws", :git => "git@github.bus.zalan.do:dagren/SwiftMonkey.git"
-    end
+target "App" do
+  pod "SwiftMonkeyPaws", :git => "git@github.bus.zalan.do:dagren/SwiftMonkey.git"
+end
     
-    target "Tests" do
-        pod "SwiftMonkey", :git => "git@github.bus.zalan.do:dagren/SwiftMonkey.git"
-    end
+target "Tests" do
+  pod "SwiftMonkey", :git => "git@github.bus.zalan.do:dagren/SwiftMonkey.git"
+end
 ````
 
 ### Manual installation
@@ -107,12 +107,12 @@ first `import SwiftMonkeyPaws`, and do the following somewhere
 early on in your program execution:
 
 ````swift
-    var paws: MonkeyPaws?
+var paws: MonkeyPaws?
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        paws = MonkeyPaws(view: window!)
-        return true
-    }
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+  paws = MonkeyPaws(view: window!)
+  return true
+}
 ````
 (This example uses `application(_, didFinishLaunchingWithOptions)`,
 but any time after you have a UIWindow will do.)
@@ -122,7 +122,7 @@ UIEvents. If you would rather not do this, or if you already have
 a source of UIEvents, you can pass the following option to `init`
 to disable swizzling:
 ````swift
-    paws = MonkeyPaws(view: window!, tapUIApplication: false)
+paws = MonkeyPaws(view: window!, tapUIApplication: false)
 ````
 Then you can pass in events or touches with either of the
 following calls:
