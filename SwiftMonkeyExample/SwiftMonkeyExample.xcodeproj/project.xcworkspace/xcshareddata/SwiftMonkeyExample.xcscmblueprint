@@ -1,0 +1,37 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "CB4A790A02E443A8E77ED64D267762EC6C9F4DD7",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "3A15F9786DF6DF123A0E7E6E5AD8820CE9269B43" : 9223372036854775807,
+    "CB4A790A02E443A8E77ED64D267762EC6C9F4DD7" : 9223372036854775807,
+    "19755F993403329426CC5000A916411944474883" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "ABE3EADB-1F5A-4F15-A327-70066AEF661A",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "3A15F9786DF6DF123A0E7E6E5AD8820CE9269B43" : "SwiftMonkeyExample\/Packages\/SwiftMonkeyPaws\/",
+    "CB4A790A02E443A8E77ED64D267762EC6C9F4DD7" : "SwiftMonkeyExample\/",
+    "19755F993403329426CC5000A916411944474883" : "SwiftMonkeyExample\/Packages\/SwiftMonkey\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "SwiftMonkeyExample",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "SwiftMonkeyExample.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.bus.zalan.do:dagren\/SwiftMonkey.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "19755F993403329426CC5000A916411944474883"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.bus.zalan.do:dagren\/SwiftMonkeyPaws.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "3A15F9786DF6DF123A0E7E6E5AD8820CE9269B43"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.bus.zalan.do:dagren\/SwiftMonkeyExample.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "CB4A790A02E443A8E77ED64D267762EC6C9F4DD7"
+    }
+  ]
+}
