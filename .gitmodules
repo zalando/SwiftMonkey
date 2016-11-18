@@ -1,6 +1,0 @@
-[submodule "Packages/SwiftMonkey"]
-	path = Packages/SwiftMonkey
-	url = git@github.bus.zalan.do:dagren/SwiftMonkey.git
-[submodule "Packages/SwiftMonkeyPaws"]
-	path = Packages/SwiftMonkeyPaws
-	url = git@github.bus.zalan.do:dagren/SwiftMonkeyPaws.git
