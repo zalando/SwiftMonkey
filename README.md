@@ -96,9 +96,9 @@ but obviously don't really work yet.
 
 ### SwiftMonkey
 
-    To do monkey testing, `import SwiftMonkey`, then create a new
-    test case that uses the `Monkey` object to configure and run
-    the input event generation. Here is a simple example:
+To do monkey testing, `import SwiftMonkey`, then create a new
+test case that uses the `Monkey` object to configure and run
+the input event generation. Here is a simple example:
 
     func testMonkey() {
         let application = XCUIApplication()
@@ -133,15 +133,15 @@ but obviously don't really work yet.
         monkey.monkeyAround()
     }
 
-    The `Monkey` object allows you not only to add the built-in
-    event generators, but you can also just add any block of your
-    own to be executed either randomly or at set intervals. In
-    these blocks, you can do whatever you want, including but not
-    limited to generating more input events.
+The `Monkey` object allows you not only to add the built-in
+event generators, but you can also just add any block of your
+own to be executed either randomly or at set intervals. In
+these blocks, you can do whatever you want, including but not
+limited to generating more input events.
 
-    Documentation for this is limited at the moment, so please
-    refer to `Monkey.swift` and its extensions for examples of
-    how to use the more advanced functionality if you need it.
+Documentation for this is limited at the moment, so please
+refer to `Monkey.swift` and its extensions for examples of
+how to use the more advanced functionality if you need it.
 
 ### SwiftMonkeyPaws
 
