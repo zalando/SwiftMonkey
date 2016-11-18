@@ -9,7 +9,7 @@ provides visualisation of the generated events. This greatly
 increases the usefulness of the randomised testing, as you can
 see what touches caused any crash you may encounter.
 
-### Why use this?
+## Why use this?
 
 - When testing your UI, it's very easy to think of how to test
   how things *should* work, but do you struggle to to figure out
@@ -31,9 +31,9 @@ framework, providing better opportunities to debug.
 
 Also, it is fun to look at:
 
-**Example video goes here**
+<iframe src='https://gfycat.com/ifr/IndolentTallFoxterrier' frameborder='0' scrolling='no' width='640' height='1136' allowfullscreen></iframe>
 
-### Installation
+## Installation
 
 As a high-level overview, you add `SwiftMonkey.framework` to your
 UI test target, and then add a test that creates a `Monkey`
@@ -44,14 +44,14 @@ main app, and create a `MonkeyPaws` object to enable visualisation.
 You probably only want to do this in Debug builds, or when a
 specific command line flag is used.
 
-#### Requirements
+### Requirements
 
 SwiftMonkey uses Swift 3.0. It has no dependencies other than
 iOS itself (8.0 and up should work). SwiftMonkeyPaws also
 similarly has no dependencies, and can also be used on its own
 without SwiftMonkey.
 
-#### CocoaPods
+### CocoaPods
 
 You can install the frameworks using [CocoaPods][]. Assuming
 your main app and test targets are named "App" and "Tests", you
@@ -65,7 +65,7 @@ can use something like this in your `Podfile`:
         pod "SwiftMonkey", :git => "git@github.bus.zalan.do:dagren/SwiftMonkey.git"
     end
 
-#### Manual installation
+### Manual installation
 
 Copy the `SwiftMonkey` and `SwiftMonkeyPaws` folders into your
 project. Next, drag the `xcodeproj` files into your project.
@@ -80,19 +80,19 @@ Embedded Binaries section of your app target is enough.
 (You can also just directly link the Swift files, if you do not
 want to use frameworks.)
 
-#### Swift Package Manager
+### Swift Package Manager
 
 The Swift Package Manager does not at the time of writing support
 iOS projects. SPM package files have experimentally been created,
 but obviously don't really work yet.
 
-### Usage
+## Usage
 
-#### SwiftMonkey
+### SwiftMonkey
 
 To be written.
 
-#### SwiftMonkeyPaws
+### SwiftMonkeyPaws
 
 The simplest way to enable the visualisation in the app is to
 first `import SwiftMonkeyPaws`, and do the following somewhere
@@ -122,7 +122,7 @@ following calls:
 
     paws?.append(touch: touch) // touch is UITouch
 
-### Contributing
+## Contributing
 
 Feel free to file issues and send pull requests for this
 project! It is very new and not overly organised yet, so be
@@ -136,15 +136,15 @@ of conduct for this project:
 
 <http://contributor-covenant.org/version/1/4/>
 
-#### Thanks to
+### Thanks to
 
 * The Zalando open source guild for helping get this project
   off the ground.
 * João Nunes for help with documentation.
 
-### TODO
+## TODO
 
-#### SwiftMonkey
+### SwiftMonkey
 
 - Add more input event actions.
 - Add randomised testing using public XCTest APIs instead of private ones.
@@ -163,25 +163,26 @@ of conduct for this project:
 - Once Swift Package Manager has iOS support, update project
   to support it properly.
 
-#### SwiftMonkeyPaws
+### SwiftMonkeyPaws
 
 - Add more customisability for the visualisation.
 
-#### SwiftMonkeyExample
+### SwiftMonkeyExample
 
 - Add more UI elements, views and controls to make the example
   look more interesting.
 - Maybe add some actual crashes that the monkey testing can find?
 
-### Contact
+## Contact
 
-This software is written by Dag Ågren (dag.agren@zalando.fi)
-for Zalando SE.
+This software was originally written by Dag Ågren
+(dag.agren@zalando.fi) for Zalando SE. This email address serves
+as the main contact address for this project.
 
 Bug reports and feature requests are more likely to be addressed
 if posted as issues here on GitHub.
 
-### License
+## License
 
 The MIT License (MIT) Copyright © 2016 Zalando SE, https://tech.zalando.com
 
