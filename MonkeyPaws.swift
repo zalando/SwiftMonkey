@@ -13,11 +13,10 @@ private let crossRadius: CGFloat = 7
 private let circleRadius: CGFloat = 7
 
 public class MonkeyPaws: NSObject, CALayerDelegate {
-    private var gestures: [Gesture] = []
+    private var gestures: [(hash: Int?, gesture: Gesture)] = []
     private weak var view: UIView?
-    private var counter: Int = 0
 
-    private(set) var layer: CALayer = CALayer()
+    let layer = CALayer()
 
     fileprivate static var tappingTracks: [WeakReference<MonkeyPaws>] = []
 
@@ -46,7 +45,7 @@ public class MonkeyPaws: NSObject, CALayerDelegate {
             append(touch: touch)
         }
 
-        updateLayer()
+        bumpAndDisplayLayer()
     }
 
     func append(touch: UITouch) {
@@ -55,30 +54,32 @@ public class MonkeyPaws: NSObject, CALayerDelegate {
         let touchHash = touch.hash
         let point = touch.location(in: view)
 
-        let index = gestures.index(where: { (gesture) -> Bool in
-            return gesture.touchHash == touchHash
+        let index = gestures.index(where: { (gestureHash, _) -> Bool in
+            return gestureHash == touchHash
         })
 
         if let index = index {
+            let gesture = gestures[index].gesture
+
             if touch.phase == .ended {
-                gestures[index].ended = true
-                gestures[index].touchHash = nil
+                gestures[index].gesture.end(at: point)
+                gestures[index].hash = nil
+            } else if touch.phase == .cancelled {
+                gestures[index].gesture.cancel(at: point)
+                gestures[index].hash = nil
+            } else {
+                gesture.extend(to: point)
             }
-            if touch.phase == .cancelled {
-                gestures[index].cancelled = true
-                gestures[index].touchHash = nil
-            }
-            gestures[index].points.append(point)
         } else {
-            if gestures.count > maxGesturesShown { gestures.removeFirst() }
+            if gestures.count > maxGesturesShown {
+                gestures.removeFirst()
+            }
 
-            let colour = UIColor(hue: CGFloat(fmod(Float(counter) * 0.391, 1)), saturation: 1, brightness: 0.5, alpha: 1)
-            let angle = 45 * (CGFloat(fmod(Float(counter) * 0.279, 1)) * 2 - 1)
-            let mirrored = counter % 2 == 0
+            gestures.append((hash: touchHash, gesture: Gesture(from: point, inLayer: layer)))
 
-            gestures.append(Gesture(firstPoint: point, colour: colour, angle: angle, mirrored: mirrored, touchHash: touch.hash))
-
-            counter += 1
+            for i in 0 ..< gestures.count {
+                gestures[i].gesture.number = gestures.count - i
+            }
         }
     }
 
@@ -105,57 +106,7 @@ public class MonkeyPaws: NSObject, CALayerDelegate {
         MonkeyPaws.tappingTracks.append(WeakReference(self))
     }
 
-    public func draw(_ layer: CALayer, in ctx: CGContext) {
-        ctx.clear(layer.bounds)
-
-        UIGraphicsPushContext(ctx)
-
-        for (index, gesture) in gestures.enumerated() {
-            let fraction = Float(maxGesturesShown - gestures.count + index + 1) / Float(maxGesturesShown)
-            let alpha = CGFloat(sqrt(fraction))
-
-            ctx.setAlpha(alpha)
-            gesture.colour.setStroke()
-
-            let startPoint = gesture.points.first!
-            drawMonkeyHand(colour: gesture.colour, at: startPoint, content: String(gestures.count - index), angle: gesture.angle, scale: 1, mirrored: gesture.mirrored)
-
-            if gesture.points.count >= 2 {
-                let endPoint = gesture.points.last!
-
-                if gesture.ended {
-                    drawCircle(colour: gesture.colour, at: endPoint)
-                }
-
-                if gesture.cancelled {
-                    drawCross(colour: gesture.colour, at: endPoint)
-                }
-
-                ctx.saveGState()
-
-                let clipPath = UIBezierPath(rect: layer.bounds)
-                let handPath = monkeyHand(at: startPoint, angle: gesture.angle, scale: 1, mirrored: gesture.mirrored)
-
-                clipPath.append(handPath)
-                clipPath.usesEvenOddFillRule = true
-                clipPath.addClip()
-
-                let path = UIBezierPath()
-                path.move(to: startPoint)
-                for point in gesture.points.dropFirst() {
-                    path.addLine(to: point)
-                }
-
-                path.stroke()
-
-                ctx.restoreGState()
-            }
-        }
-
-        UIGraphicsPopContext()
-    }
-
-    private func updateLayer() {
+    private func bumpAndDisplayLayer() {
         guard let superlayer = layer.superlayer else { return }
         guard let layers = superlayer.sublayers else { return }
         guard let index = layers.index(of: layer) else { return }
@@ -172,7 +123,7 @@ public class MonkeyPaws: NSObject, CALayerDelegate {
     }
 }
 
-func drawMonkeyHand(colour: UIColor, at: CGPoint, content: String, angle: CGFloat, scale: CGFloat, mirrored: Bool) {
+/*func drawMonkeyHand(colour: UIColor, at: CGPoint, content: String, angle: CGFloat, scale: CGFloat, mirrored: Bool) {
     let context = UIGraphicsGetCurrentContext()!
 
     let handPath = monkeyHand(at: at, angle: angle, scale: 1, mirrored: mirrored)
@@ -195,9 +146,147 @@ func drawMonkeyHand(colour: UIColor, at: CGPoint, content: String, angle: CGFloa
     context.restoreGState()
 
     context.restoreGState()
+}*/
+
+private class Gesture {
+    var points: [CGPoint]
+
+    var containerLayer = CALayer()
+    var startLayer = CAShapeLayer()
+    var numberLayer = CATextLayer()
+    var pathLayer: CAShapeLayer?
+    var endLayer: CAShapeLayer?
+
+    private static var counter: Int = 0
+
+    init(from: CGPoint, inLayer: CALayer) {
+        self.points = [from]
+
+        let counter = Gesture.counter
+        Gesture.counter += 1
+
+        let angle = 45 * (CGFloat(fmod(Float(counter) * 0.279, 1)) * 2 - 1)
+        let mirrored = counter % 2 == 0
+        let colour = UIColor(hue: CGFloat(fmod(Float(counter) * 0.391, 1)), saturation: 1, brightness: 0.5, alpha: 1)
+        startLayer.path = monkeyHandPath(angle: angle, scale: 1, mirrored: mirrored).cgPath
+        startLayer.strokeColor = colour.cgColor
+        startLayer.fillColor = nil
+        startLayer.position = from
+        containerLayer.addSublayer(startLayer)
+
+        numberLayer.string = "1"
+        numberLayer.bounds = CGRect(x:0, y: 0, width: 32, height: 13)
+        numberLayer.fontSize = 10
+        numberLayer.alignmentMode = kCAAlignmentCenter
+        numberLayer.foregroundColor = colour.cgColor
+        numberLayer.position = from
+        numberLayer.contentsScale = UIScreen.main.scale
+        containerLayer.addSublayer(numberLayer)
+
+        inLayer.addSublayer(containerLayer)
+    }
+
+    deinit {
+        containerLayer.removeFromSuperlayer()
+    }
+
+
+    var number: Int = 0 {
+        didSet {
+            numberLayer.string = String(number)
+
+            let fraction = Float(number - 1) / Float(maxGesturesShown)
+            let alpha = sqrt(1 - fraction)
+            containerLayer.opacity = alpha
+        }
+    }
+
+    func extend(to: CGPoint) {
+        guard let startPath = startLayer.path,
+        let startPoint = points.first else {
+            assertionFailure("No start marker layer exists")
+            return
+        }
+
+        points.append(to)
+
+        let pathLayer = self.pathLayer ?? { () -> CAShapeLayer in
+            let newLayer = CAShapeLayer()
+            newLayer.strokeColor = startLayer.strokeColor
+            newLayer.fillColor = nil
+
+            let maskPath = CGMutablePath()
+            maskPath.addRect(CGRect(x: -10000, y: -10000, width: 20000, height: 20000))
+            maskPath.addPath(startPath)
+
+            let maskLayer = CAShapeLayer()
+            maskLayer.path = maskPath
+            maskLayer.fillRule = kCAFillRuleEvenOdd
+            maskLayer.position = startLayer.position
+            newLayer.mask = maskLayer
+
+            self.pathLayer = newLayer
+            containerLayer.addSublayer(newLayer)
+
+            return newLayer
+        }()
+
+        let path = CGMutablePath()
+        path.move(to: startPoint)
+        for point in points.dropFirst() {
+            path.addLine(to: point)
+        }
+
+        pathLayer.path = path
+    }
+
+    func end(at: CGPoint) {
+        guard endLayer == nil else {
+            assertionFailure("Attempted to end or cancel a gesture twice!")
+            return
+        }
+
+        extend(to: at)
+
+        let layer = CAShapeLayer()
+        layer.strokeColor = startLayer.strokeColor
+        layer.fillColor = nil
+        layer.position = at
+
+        let path = circlePath()
+        layer.path = path.cgPath
+
+        containerLayer.addSublayer(layer)
+        endLayer = layer
+    }
+
+    func cancel(at: CGPoint) {
+        guard endLayer == nil else {
+            assertionFailure("Attempted to end or cancel a gesture twice!")
+            return
+        }
+
+        extend(to: at)
+
+        let layer = CAShapeLayer()
+        layer.strokeColor = startLayer.strokeColor
+        layer.fillColor = nil
+        layer.position = at
+
+        let path = crossPath()
+        layer.path = path.cgPath
+
+        containerLayer.addSublayer(layer)
+        endLayer = layer
+    }
 }
 
-func monkeyHand(at: CGPoint, angle: CGFloat, scale: CGFloat, mirrored: Bool) -> UIBezierPath {
+private struct WeakReference<T: AnyObject> {
+    weak var value: T?
+    init(_ value: T) { self.value = value }
+}
+
+func monkeyHandPath(angle: CGFloat, scale: CGFloat, mirrored: Bool) -> UIBezierPath {
     let bezierPath = UIBezierPath()
     bezierPath.move(to: CGPoint(x: -5.91, y: 8.76))
     bezierPath.addCurve(to: CGPoint(x: -10.82, y: 2.15), controlPoint1: CGPoint(x: -9.18, y: 7.11), controlPoint2: CGPoint(x: -8.09, y: 4.9))
@@ -220,6 +309,8 @@ func monkeyHand(at: CGPoint, angle: CGFloat, scale: CGFloat, mirrored: Bool) -> 
     bezierPath.addCurve(to: CGPoint(x: -5.91, y: 8.76), controlPoint1: CGPoint(x: 7.21, y: 9.86), controlPoint2: CGPoint(x: -2.63, y: 10.41))
     bezierPath.close()
 
+    bezierPath.apply(CGAffineTransform(translationX: 0.5, y: 0))
+
     bezierPath.apply(CGAffineTransform(scaleX: scale, y: scale))
 
     if mirrored {
@@ -228,25 +319,21 @@ func monkeyHand(at: CGPoint, angle: CGFloat, scale: CGFloat, mirrored: Bool) -> 
 
     bezierPath.apply(CGAffineTransform(rotationAngle: angle / 180 * CGFloat.pi))
 
-    bezierPath.apply(CGAffineTransform(translationX: at.x, y: at.y))
-
     return bezierPath
 }
 
-func drawCircle(colour: UIColor, at: CGPoint) {
-    let endCircle = UIBezierPath(ovalIn: CGRect(centre: at, size: CGSize(width: circleRadius * 2, height: circleRadius * 2)))
-    endCircle.stroke()
+func circlePath() -> UIBezierPath {
+    return UIBezierPath(ovalIn: CGRect(centre: CGPoint.zero, size: CGSize(width: circleRadius * 2, height: circleRadius * 2)))
 }
 
-func drawCross(colour: UIColor, at: CGPoint) {
-    let rect = CGRect(centre: at, size: CGSize(width: crossRadius * 2, height: crossRadius * 2))
+func crossPath() -> UIBezierPath {
+    let rect = CGRect(centre: CGPoint.zero, size: CGSize(width: crossRadius * 2, height: crossRadius * 2))
     let cross = UIBezierPath()
     cross.move(to: CGPoint(x: rect.minX, y: rect.minY))
     cross.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
     cross.move(to: CGPoint(x: rect.minX, y: rect.maxY))
     cross.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
-    colour.setStroke()
-    cross.stroke()
+    return cross
 }
 
 extension UIApplication {
@@ -259,31 +346,6 @@ extension UIApplication {
 
         self.monkey_sendEvent(event)
     }
-}
-
-private struct Gesture {
-    var points: [CGPoint]
-    let colour: UIColor
-    let angle: CGFloat
-    let mirrored: Bool
-    var touchHash: Int?
-    var ended: Bool
-    var cancelled: Bool
-
-    init(firstPoint: CGPoint, colour: UIColor, angle: CGFloat, mirrored: Bool, touchHash: Int) {
-        self.points = [firstPoint]
-        self.colour = colour
-        self.angle = angle
-        self.mirrored = mirrored
-        self.touchHash = touchHash
-        self.ended = false
-        self.cancelled = false
-    }
-}
-
-private struct WeakReference<T: AnyObject> {
-    weak var value: T?
-    init(_ value: T) { self.value = value }
 }
 
 extension CGRect {

@@ -57,7 +57,6 @@ framework here:
 
 ### TODO
 
-- Speed up drawing.
 - Add more customisability for the visualisation.
 - Once Swift Package Manager has iOS support, update project
   to support it properly.
