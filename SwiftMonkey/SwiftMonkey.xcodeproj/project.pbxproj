@@ -18,8 +18,7 @@
 
 /* Begin PBXFileReference section */
 		C929B55E1DD0B966004B256F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		C943263F1DDB2D130038A891 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		C94326401DDB2D130038A891 /* SwiftMonkey.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = SwiftMonkey.podspec; sourceTree = "<group>"; };
+		C94326401DDB2D130038A891 /* SwiftMonkey.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = SwiftMonkey.podspec; path = ../SwiftMonkey.podspec; sourceTree = "<group>"; };
 		C94326411DDB2F260038A891 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		OBJ_10 /* MonkeyUIAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonkeyUIAutomation.swift; sourceTree = "<group>"; };
 		OBJ_11 /* MonkeyXCTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonkeyXCTest.swift; sourceTree = "<group>"; };
@@ -70,7 +69,6 @@
 		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
-				C943263F1DDB2D130038A891 /* README.md */,
 				OBJ_6 /* Package.swift */,
 				C94326401DDB2D130038A891 /* SwiftMonkey.podspec */,
 				OBJ_7 /* Sources */,

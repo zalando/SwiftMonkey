@@ -14,10 +14,9 @@
 		C929B53E1DD0A764004B256F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C929B53D1DD0A764004B256F /* Assets.xcassets */; };
 		C929B5411DD0A764004B256F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C929B53F1DD0A764004B256F /* LaunchScreen.storyboard */; };
 		C929B54C1DD0A764004B256F /* MonkeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C929B54B1DD0A764004B256F /* MonkeyTests.swift */; };
-		C943265C1DDB396E0038A891 /* SwiftMonkeyPaws.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C943265B1DDB39260038A891 /* SwiftMonkeyPaws.framework */; };
-		C943265D1DDB396E0038A891 /* SwiftMonkeyPaws.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C943265B1DDB39260038A891 /* SwiftMonkeyPaws.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C94326601DDB3D900038A891 /* SwiftMonkey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C94326561DDB39170038A891 /* SwiftMonkey.framework */; };
-		C9CB3B761DDB6204001C561B /* SwiftMonkey.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C94326561DDB39170038A891 /* SwiftMonkey.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C984D5971DDF2241003D8044 /* SwiftMonkeyPaws.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C984D5931DDF21CC003D8044 /* SwiftMonkeyPaws.framework */; };
+		C984D5981DDF2241003D8044 /* SwiftMonkeyPaws.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C984D5931DDF21CC003D8044 /* SwiftMonkeyPaws.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C984D59F1DDF22EA003D8044 /* SwiftMonkey.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C984D58E1DDF21C0003D8044 /* SwiftMonkey.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,28 +27,28 @@
 			remoteGlobalIDString = C929B5301DD0A764004B256F;
 			remoteInfo = SwiftMonkeyExample;
 		};
-		C94326551DDB39170038A891 /* PBXContainerItemProxy */ = {
+		C984D58D1DDF21C0003D8044 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C929B5621DD0C4A1004B256F /* SwiftMonkey.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = OBJ_16;
 			remoteInfo = SwiftMonkey;
 		};
-		C943265A1DDB39260038A891 /* PBXContainerItemProxy */ = {
+		C984D5921DDF21CC003D8044 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C929B5881DD0CD89004B256F /* SwiftMonkeyPaws.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = OBJ_12;
 			remoteInfo = SwiftMonkeyPaws;
 		};
-		C943265E1DDB396E0038A891 /* PBXContainerItemProxy */ = {
+		C984D5991DDF2241003D8044 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C929B5881DD0CD89004B256F /* SwiftMonkeyPaws.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = OBJ_13;
 			remoteInfo = SwiftMonkeyPaws;
 		};
-		C94326611DDB3D9B0038A891 /* PBXContainerItemProxy */ = {
+		C984D59C1DDF22C7003D8044 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C929B5621DD0C4A1004B256F /* SwiftMonkey.xcodeproj */;
 			proxyType = 1;
@@ -65,9 +64,19 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C943265D1DDB396E0038A891 /* SwiftMonkeyPaws.framework in Embed Frameworks */,
+				C984D5981DDF2241003D8044 /* SwiftMonkeyPaws.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C984D59E1DDF22D9003D8044 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				C984D59F1DDF22EA003D8044 /* SwiftMonkey.framework in CopyFiles */,
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C9CB3B751DDB61F6001C561B /* CopyFiles */ = {
@@ -76,7 +85,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C9CB3B761DDB6204001C561B /* SwiftMonkey.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,9 +102,9 @@
 		C929B5471DD0A764004B256F /* SwiftMonkeyExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftMonkeyExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C929B54B1DD0A764004B256F /* MonkeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonkeyTests.swift; sourceTree = "<group>"; };
 		C929B54D1DD0A764004B256F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C929B5621DD0C4A1004B256F /* SwiftMonkey.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftMonkey.xcodeproj; path = Packages/SwiftMonkey/SwiftMonkey.xcodeproj; sourceTree = "<group>"; };
-		C929B5881DD0CD89004B256F /* SwiftMonkeyPaws.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftMonkeyPaws.xcodeproj; path = Packages/SwiftMonkeyPaws/SwiftMonkeyPaws.xcodeproj; sourceTree = SOURCE_ROOT; };
-		C94326511DDB34200038A891 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		C929B5621DD0C4A1004B256F /* SwiftMonkey.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftMonkey.xcodeproj; path = ../SwiftMonkey/SwiftMonkey.xcodeproj; sourceTree = "<group>"; };
+		C929B5881DD0CD89004B256F /* SwiftMonkeyPaws.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftMonkeyPaws.xcodeproj; path = ../SwiftMonkeyPaws/SwiftMonkeyPaws.xcodeproj; sourceTree = SOURCE_ROOT; };
+		C94326511DDB34200038A891 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,7 +112,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C943265C1DDB396E0038A891 /* SwiftMonkeyPaws.framework in Frameworks */,
+				C984D5971DDF2241003D8044 /* SwiftMonkeyPaws.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,7 +120,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C94326601DDB3D900038A891 /* SwiftMonkey.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,18 +170,18 @@
 			path = AppTests;
 			sourceTree = "<group>";
 		};
-		C94326521DDB39160038A891 /* Products */ = {
+		C984D58A1DDF21C0003D8044 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C94326561DDB39170038A891 /* SwiftMonkey.framework */,
+				C984D58E1DDF21C0003D8044 /* SwiftMonkey.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		C94326571DDB39260038A891 /* Products */ = {
+		C984D58F1DDF21CC003D8044 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C943265B1DDB39260038A891 /* SwiftMonkeyPaws.framework */,
+				C984D5931DDF21CC003D8044 /* SwiftMonkeyPaws.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -194,7 +201,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				C943265F1DDB396E0038A891 /* PBXTargetDependency */,
+				C984D59A1DDF2241003D8044 /* PBXTargetDependency */,
 			);
 			name = SwiftMonkeyExample;
 			productName = SwiftMonkeyExample;
@@ -209,11 +216,12 @@
 				C929B5441DD0A764004B256F /* Frameworks */,
 				C929B5451DD0A764004B256F /* Resources */,
 				C9CB3B751DDB61F6001C561B /* CopyFiles */,
+				C984D59E1DDF22D9003D8044 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				C94326621DDB3D9B0038A891 /* PBXTargetDependency */,
+				C984D59D1DDF22C7003D8044 /* PBXTargetDependency */,
 				C929B5491DD0A764004B256F /* PBXTargetDependency */,
 			);
 			name = SwiftMonkeyExampleUITests;
@@ -257,11 +265,11 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = C94326521DDB39160038A891 /* Products */;
+					ProductGroup = C984D58A1DDF21C0003D8044 /* Products */;
 					ProjectRef = C929B5621DD0C4A1004B256F /* SwiftMonkey.xcodeproj */;
 				},
 				{
-					ProductGroup = C94326571DDB39260038A891 /* Products */;
+					ProductGroup = C984D58F1DDF21CC003D8044 /* Products */;
 					ProjectRef = C929B5881DD0CD89004B256F /* SwiftMonkeyPaws.xcodeproj */;
 				},
 			);
@@ -274,18 +282,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		C94326561DDB39170038A891 /* SwiftMonkey.framework */ = {
+		C984D58E1DDF21C0003D8044 /* SwiftMonkey.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = SwiftMonkey.framework;
-			remoteRef = C94326551DDB39170038A891 /* PBXContainerItemProxy */;
+			remoteRef = C984D58D1DDF21C0003D8044 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		C943265B1DDB39260038A891 /* SwiftMonkeyPaws.framework */ = {
+		C984D5931DDF21CC003D8044 /* SwiftMonkeyPaws.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = SwiftMonkeyPaws.framework;
-			remoteRef = C943265A1DDB39260038A891 /* PBXContainerItemProxy */;
+			remoteRef = C984D5921DDF21CC003D8044 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -337,15 +345,15 @@
 			target = C929B5301DD0A764004B256F /* SwiftMonkeyExample */;
 			targetProxy = C929B5481DD0A764004B256F /* PBXContainerItemProxy */;
 		};
-		C943265F1DDB396E0038A891 /* PBXTargetDependency */ = {
+		C984D59A1DDF2241003D8044 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SwiftMonkeyPaws;
-			targetProxy = C943265E1DDB396E0038A891 /* PBXContainerItemProxy */;
+			targetProxy = C984D5991DDF2241003D8044 /* PBXContainerItemProxy */;
 		};
-		C94326621DDB3D9B0038A891 /* PBXTargetDependency */ = {
+		C984D59D1DDF22C7003D8044 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SwiftMonkey;
-			targetProxy = C94326611DDB3D9B0038A891 /* PBXContainerItemProxy */;
+			targetProxy = C984D59C1DDF22C7003D8044 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
