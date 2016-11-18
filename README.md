@@ -31,7 +31,13 @@ framework, providing better opportunities to debug.
 
 Also, it is fun to look at:
 
-<iframe src='https://gfycat.com/ifr/IndolentTallFoxterrier' frameborder='0' scrolling='no' width='640' height='1136' allowfullscreen></iframe>
+<img src="https://thumbs.gfycat.com/IndolentTallFoxterrier-size_restricted.gif" height="480">
+
+## Quick start
+
+To see for yourself how this framework works, just grab the code,
+and open `SwiftMonkeyExample/SwiftMonkeyExample.xcodeproj`, and
+then press `Cmd-U` to run the UI test.
 
 ## Installation
 
