@@ -15,6 +15,12 @@ included in the repo. There are no other external dependencies.
 Open the `xcodeproj`, then press `Cmd-U` to run the tests. This
 will start the monkey test and let you see how it works.
 
+### TODO
+
+- Add more UI elements, views and controls to make the example
+  look more interesting.
+- Maybe add some actual crashes that the monkey testing can find?
+
 ### Contact
 
 This software is written by Dag Ågren (dag.agren@zalando.fi)

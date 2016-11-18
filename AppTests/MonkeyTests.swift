@@ -37,6 +37,7 @@ class SwiftMonkeyExampleUITests: XCTestCase {
 
         // Use either one of these but maybe not both.
         // XCTest private actions seem to work better at the moment.
+        // UIAutomation actions seem to work only on the simulator.
         monkey.addDefaultXCTestPrivateActions()
         //monkey.addDefaultUIAutomationActions()
 
