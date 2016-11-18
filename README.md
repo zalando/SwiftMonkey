@@ -96,7 +96,52 @@ but obviously don't really work yet.
 
 ### SwiftMonkey
 
-To be written.
+    To do monkey testing, `import SwiftMonkey`, then create a new
+    test case that uses the `Monkey` object to configure and run
+    the input event generation. Here is a simple example:
+
+    func testMonkey() {
+        let application = XCUIApplication()
+
+        // Workaround for bug in Xcode 7.3. Snapshots are not properly updated
+        // when you initially call app.frame, resulting in a zero-sized rect.
+        // Doing a random query seems to update everything properly.
+        // TODO: Remove this when the Xcode bug is fixed!
+        _ = application.descendants(matching: .any).element(boundBy: 0).frame
+
+        // Initialise the monkey tester with the current device
+        // frame. Giving an explicit seed will make it generate
+        // the same sequence of events on each run, and leaving it
+        // out will generate a new sequence on each run.
+        let monkey = Monkey(frame: application.frame)
+        //let monkey = Monkey(seed: 123, frame: application.frame)
+
+        // Add actions for the monkey to perform. We just use a
+        // default set of actions for this, which is usually enough.
+        // Use either one of these but maybe not both.
+        // XCTest private actions seem to work better at the moment.
+        // UIAutomation actions seem to work only on the simulator.
+        monkey.addDefaultXCTestPrivateActions()
+        //monkey.addDefaultUIAutomationActions()
+
+        // Occasionally, use the regular XCTest functionality
+        // to check if an alert is shown, and click a random
+        // button on it.
+        monkey.addXCTestTapAlertAction(interval: 100, application: application)
+
+        // Run the monkey test indefinitely.
+        monkey.monkeyAround()
+    }
+
+    The `Monkey` object allows you not only to add the built-in
+    event generators, but you can also just add any block of your
+    own to be executed either randomly or at set intervals. In
+    these blocks, you can do whatever you want, including but not
+    limited to generating more input events.
+
+    Documentation for this is limited at the moment, so please
+    refer to `Monkey.swift` and its extensions for examples of
+    how to use the more advanced functionality if you need it.
 
 ### SwiftMonkeyPaws
 
@@ -152,6 +197,7 @@ of conduct for this project:
 
 ### SwiftMonkey
 
+- Write more documentation.
 - Add more input event actions.
 - Add randomised testing using public XCTest APIs instead of private ones.
   - Find clickable view and click them directly instead of
