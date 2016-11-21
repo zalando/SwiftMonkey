@@ -63,13 +63,15 @@ You can install the frameworks using [CocoaPods][]. Assuming
 your main app and test targets are named "App" and "Tests", you
 can use something like this in your `Podfile`:
 
-    target "App" do
-        pod "SwiftMonkeyPaws", :git => "git@github.bus.zalan.do:dagren/SwiftMonkey.git"
-    end
+````ruby
+target "App" do
+  pod "SwiftMonkeyPaws", :git => "git@github.bus.zalan.do:dagren/SwiftMonkey.git"
+end
     
-    target "Tests" do
-        pod "SwiftMonkey", :git => "git@github.bus.zalan.do:dagren/SwiftMonkey.git"
-    end
+target "Tests" do
+  pod "SwiftMonkey", :git => "git@github.bus.zalan.do:dagren/SwiftMonkey.git"
+end
+````
 
 ### Manual installation
 
@@ -149,13 +151,14 @@ The simplest way to enable the visualisation in the app is to
 first `import SwiftMonkeyPaws`, and do the following somewhere
 early on in your program execution:
 
-    var paws: MonkeyPaws?
+````swift
+var paws: MonkeyPaws?
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        paws = MonkeyPaws(view: window!)
-        return true
-    }
-
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+  paws = MonkeyPaws(view: window!)
+  return true
+}
+````
 (This example uses `application(_, didFinishLaunchingWithOptions)`,
 but any time after you have a UIWindow will do.)
 
@@ -163,16 +166,16 @@ This call will swizzle some methods in UIApplication to capture
 UIEvents. If you would rather not do this, or if you already have
 a source of UIEvents, you can pass the following option to `init`
 to disable swizzling:
-
-    paws = MonkeyPaws(view: window!, tapUIApplication: false)
-
+````swift
+paws = MonkeyPaws(view: window!, tapUIApplication: false)
+````
 Then you can pass in events or touches with either of the
 following calls:
+````swift
+paws?.append(event: event) // event is UIEvent
 
-    paws?.append(event: event) // event is UIEvent
-
-    paws?.append(touch: touch) // touch is UITouch
-
+paws?.append(touch: touch) // touch is UITouch
+````
 ## Contributing
 
 Feel free to file issues and send pull requests for this
