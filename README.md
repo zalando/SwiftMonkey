@@ -102,38 +102,40 @@ To do monkey testing, `import SwiftMonkey`, then create a new
 test case that uses the `Monkey` object to configure and run
 the input event generation. Here is a simple example:
 
-    func testMonkey() {
-        let application = XCUIApplication()
+````swift
+func testMonkey() {
+    let application = XCUIApplication()
 
-        // Workaround for bug in Xcode 7.3. Snapshots are not properly updated
-        // when you initially call app.frame, resulting in a zero-sized rect.
-        // Doing a random query seems to update everything properly.
-        // TODO: Remove this when the Xcode bug is fixed!
-        _ = application.descendants(matching: .any).element(boundBy: 0).frame
+    // Workaround for bug in Xcode 7.3. Snapshots are not properly updated
+    // when you initially call app.frame, resulting in a zero-sized rect.
+    // Doing a random query seems to update everything properly.
+    // TODO: Remove this when the Xcode bug is fixed!
+    _ = application.descendants(matching: .any).element(boundBy: 0).frame
 
-        // Initialise the monkey tester with the current device
-        // frame. Giving an explicit seed will make it generate
-        // the same sequence of events on each run, and leaving it
-        // out will generate a new sequence on each run.
-        let monkey = Monkey(frame: application.frame)
-        //let monkey = Monkey(seed: 123, frame: application.frame)
+    // Initialise the monkey tester with the current device
+    // frame. Giving an explicit seed will make it generate
+    // the same sequence of events on each run, and leaving it
+    // out will generate a new sequence on each run.
+    let monkey = Monkey(frame: application.frame)
+    //let monkey = Monkey(seed: 123, frame: application.frame)
 
-        // Add actions for the monkey to perform. We just use a
-        // default set of actions for this, which is usually enough.
-        // Use either one of these but maybe not both.
-        // XCTest private actions seem to work better at the moment.
-        // UIAutomation actions seem to work only on the simulator.
-        monkey.addDefaultXCTestPrivateActions()
-        //monkey.addDefaultUIAutomationActions()
+    // Add actions for the monkey to perform. We just use a
+    // default set of actions for this, which is usually enough.
+    // Use either one of these but maybe not both.
+    // XCTest private actions seem to work better at the moment.
+    // UIAutomation actions seem to work only on the simulator.
+    monkey.addDefaultXCTestPrivateActions()
+    //monkey.addDefaultUIAutomationActions()
 
-        // Occasionally, use the regular XCTest functionality
-        // to check if an alert is shown, and click a random
-        // button on it.
-        monkey.addXCTestTapAlertAction(interval: 100, application: application)
+    // Occasionally, use the regular XCTest functionality
+    // to check if an alert is shown, and click a random
+    // button on it.
+    monkey.addXCTestTapAlertAction(interval: 100, application: application)
 
-        // Run the monkey test indefinitely.
-        monkey.monkeyAround()
-    }
+    // Run the monkey test indefinitely.
+    monkey.monkeyAround()
+}
+````
 
 The `Monkey` object allows you not only to add the built-in
 event generators, but you can also just add any block of your
@@ -159,6 +161,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
   return true
 }
 ````
+
 (This example uses `application(_, didFinishLaunchingWithOptions)`,
 but any time after you have a UIWindow will do.)
 
@@ -166,16 +169,20 @@ This call will swizzle some methods in UIApplication to capture
 UIEvents. If you would rather not do this, or if you already have
 a source of UIEvents, you can pass the following option to `init`
 to disable swizzling:
+
 ````swift
 paws = MonkeyPaws(view: window!, tapUIApplication: false)
 ````
+
 Then you can pass in events or touches with either of the
 following calls:
+
 ````swift
 paws?.append(event: event) // event is UIEvent
 
 paws?.append(touch: touch) // touch is UITouch
 ````
+
 ## Contributing
 
 Feel free to file issues and send pull requests for this
