@@ -64,11 +64,11 @@ your main app and test targets are named "App" and "Tests", you
 can use something like this in your `Podfile`:
 
     target "App" do
-        pod "SwiftMonkeyPaws", :git => "git@github.bus.zalan.do:dagren/SwiftMonkey.git"
+        pod "SwiftMonkeyPaws", :git => "https://github.com/zalando/SwiftMonkey.git"
     end
     
     target "Tests" do
-        pod "SwiftMonkey", :git => "git@github.bus.zalan.do:dagren/SwiftMonkey.git"
+        pod "SwiftMonkey", :git => "https://github.com/zalando/SwiftMonkey.git"
     end
 
 ### Manual installation
