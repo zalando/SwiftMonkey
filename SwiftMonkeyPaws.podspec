@@ -8,12 +8,12 @@ Pod::Spec.new do |s|
                    SwiftMonkey monkey testing library, but can also
                    be used on its own.
                    DESC
-  s.homepage     = "https://github.bus.zalan.do/dagren/SwiftMonkey"
+  s.homepage     = "https://github.com/zalando/SwiftMonkey"
   s.license      = { type: 'MIT', file: 'LICENSE' }
   s.author       = { "Dag Ågren" => "dag.agren@zalando.fi" }
   s.social_media_url = "http://twitter.com/WAHa_06x36"
   s.platform     = :ios, '8.0'
-  s.source       = { :git => "git@github.bus.zalan.do:dagren/SwiftMonkey.git", :tag => "#{s.version}" }
+  s.source       = { :git => "https://github.com/zalando/SwiftMonkey.git", :tag => "#{s.version}" }
   s.source_files = "SwiftMonkeyPaws/*.swift"
   s.exclude_files = "SwiftMonkeyPaws/Package.swift"
 end

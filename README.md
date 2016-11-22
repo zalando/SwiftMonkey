@@ -61,13 +61,15 @@ You can install the frameworks using [CocoaPods][]. Assuming
 that you've named your main app and test targets "App" and "Tests", you
 can use something like this in your `Podfile`:
 
-    target "App" do
-        pod "SwiftMonkeyPaws", :git => "git@github.bus.zalan.do:dagren/SwiftMonkey.git"
-    end
+````ruby
+target "App" do
+    pod "SwiftMonkeyPaws", :git => "https://github.com/zalando/SwiftMonkey.git"
+end
     
-    target "Tests" do
-        pod "SwiftMonkey", :git => "git@github.bus.zalan.do:dagren/SwiftMonkey.git"
-    end
+target "Tests" do
+    pod "SwiftMonkey", :git => "https://github.com/zalando/SwiftMonkey.git"
+end
+````
 
 ### Manual Installation
 
@@ -98,38 +100,40 @@ To do monkey testing, `import SwiftMonkey`, then create a new
 test case that uses the `Monkey` object to configure and run
 the input event generation. Here is a simple example:
 
-    func testMonkey() {
-        let application = XCUIApplication()
+````swift
+func testMonkey() {
+    let application = XCUIApplication()
 
-        // Workaround for bug in Xcode 7.3. Snapshots are not properly updated
-        // when you initially call app.frame, resulting in a zero-sized rect.
-        // Doing a random query seems to update everything properly.
-        // TODO: Remove this when the Xcode bug is fixed!
-        _ = application.descendants(matching: .any).element(boundBy: 0).frame
+    // Workaround for bug in Xcode 7.3. Snapshots are not properly updated
+    // when you initially call app.frame, resulting in a zero-sized rect.
+    // Doing a random query seems to update everything properly.
+    // TODO: Remove this when the Xcode bug is fixed!
+    _ = application.descendants(matching: .any).element(boundBy: 0).frame
 
-        // Initialise the monkey tester with the current device
-        // frame. Giving an explicit seed will make it generate
-        // the same sequence of events on each run, and leaving it
-        // out will generate a new sequence on each run.
-        let monkey = Monkey(frame: application.frame)
-        //let monkey = Monkey(seed: 123, frame: application.frame)
+    // Initialise the monkey tester with the current device
+    // frame. Giving an explicit seed will make it generate
+    // the same sequence of events on each run, and leaving it
+    // out will generate a new sequence on each run.
+    let monkey = Monkey(frame: application.frame)
+    //let monkey = Monkey(seed: 123, frame: application.frame)
 
-        // Add actions for the monkey to perform. We just use a
-        // default set of actions for this, which is usually enough.
-        // Use either one of these, but maybe not both.
-        // XCTest private actions seem to work better at the moment.
-        // UIAutomation actions seem to work only on the simulator.
-        monkey.addDefaultXCTestPrivateActions()
-        //monkey.addDefaultUIAutomationActions()
+    // Add actions for the monkey to perform. We just use a
+    // default set of actions for this, which is usually enough.
+    // Use either one of these, but maybe not both.
+    // XCTest private actions seem to work better at the moment.
+    // UIAutomation actions seem to work only on the simulator.
+    monkey.addDefaultXCTestPrivateActions()
+    //monkey.addDefaultUIAutomationActions()
 
-        // Occasionally, use the regular XCTest functionality
-        // to check if an alert is shown, and click a random
-        // button on it.
-        monkey.addXCTestTapAlertAction(interval: 100, application: application)
+    // Occasionally, use the regular XCTest functionality
+    // to check if an alert is shown, and click a random
+    // button on it.
+    monkey.addXCTestTapAlertAction(interval: 100, application: application)
 
-        // Run the monkey test indefinitely.
-        monkey.monkeyAround()
-    }
+    // Run the monkey test indefinitely.
+    monkey.monkeyAround()
+}
+````
 
 The `Monkey` object allows you not only to add the built-in
 event generators, but also any block of your
@@ -147,12 +151,14 @@ The simplest way to enable the visualisation in your app is to
 first `import SwiftMonkeyPaws`, then do the following somewhere
 early on in your program execution:
 
-    var paws: MonkeyPaws?
+````swift
+var paws: MonkeyPaws?
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        paws = MonkeyPaws(view: window!)
-        return true
-    }
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+  paws = MonkeyPaws(view: window!)
+  return true
+}
+````
 
 (This example uses `application(_, didFinishLaunchingWithOptions)`,
 but any time after you have a UIWindow will do.)
@@ -162,14 +168,18 @@ UIEvents. If you would rather not do this, or if you already have
 a source of UIEvents, you can pass the following option to `init`
 to disable swizzling:
 
-    paws = MonkeyPaws(view: window!, tapUIApplication: false)
+````swift
+paws = MonkeyPaws(view: window!, tapUIApplication: false)
+````
 
 Then you can pass in events or touches with either of the
 following calls:
 
-    paws?.append(event: event) // event is UIEvent
+````swift
+paws?.append(event: event) // event is UIEvent
 
-    paws?.append(touch: touch) // touch is UITouch
+paws?.append(touch: touch) // touch is UITouch
+````
 
 ## Contributing
 
