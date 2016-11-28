@@ -12,6 +12,29 @@ private let maxGesturesShown: Int = 15
 private let crossRadius: CGFloat = 7
 private let circleRadius: CGFloat = 7
 
+/**
+    A class that visualises input events as an overlay over
+    your regular UI. To use, simply instantiate it and
+    keep a reference to it around so that it does not get
+    deinited.
+
+    You will want to have some way to only instantiate it
+    for test usage, though, such as adding a command-line
+    flag to enable it.
+
+    Example usage:
+
+    ```
+    var paws: MonkeyPaws?
+
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        if CommandLine.arguments.contains("--MonkeyPaws") {
+            paws = MonkeyPaws(view: window!)
+        }
+        return true
+    }
+    ```
+*/
 public class MonkeyPaws: NSObject, CALayerDelegate {
     private var gestures: [(hash: Int?, gesture: Gesture)] = []
     private weak var view: UIView?
@@ -20,6 +43,19 @@ public class MonkeyPaws: NSObject, CALayerDelegate {
 
     fileprivate static var tappingTracks: [WeakReference<MonkeyPaws>] = []
 
+    /**
+        Create a MonkeyPaws object that will visualise input
+        events.
+
+        - parameter view: The view to put the visualisation
+          layer in. Usually, you will want to pass your main
+          `UIWindow` here.
+        - parameter tapUIApplication: By default, MonkeyPaws
+          will swizzle some methods in UIApplication to
+          intercept events so that it can visualise them.
+          If you do not want this, pass `false` here and
+          provide it with events manually.
+    */
     public init(view: UIView, tapUIApplication: Bool = true) {
         super.init()
         self.view = view
@@ -37,7 +73,12 @@ public class MonkeyPaws: NSObject, CALayerDelegate {
         }
     }
 
-    func append(event: UIEvent) {
+    /**
+        If you have disabled UIApplication event tapping,
+        use this method to pass in `UIEvent` objects to
+        visualise.
+    */
+    public func append(event: UIEvent) {
         guard event.type == .touches else { return }
         guard let touches = event.allTouches else { return }
 
@@ -122,31 +163,6 @@ public class MonkeyPaws: NSObject, CALayerDelegate {
         layer.displayIfNeeded()
     }
 }
-
-/*func drawMonkeyHand(colour: UIColor, at: CGPoint, content: String, angle: CGFloat, scale: CGFloat, mirrored: Bool) {
-    let context = UIGraphicsGetCurrentContext()!
-
-    let handPath = monkeyHand(at: at, angle: angle, scale: 1, mirrored: mirrored)
-    colour.setStroke()
-    handPath.lineWidth = 1
-    handPath.stroke()
-
-    context.saveGState()
-    context.translateBy(x: at.x, y: at.y)
-
-    let textRect = CGRect(x: -14, y: -10.5, width: 28, height: 21)
-    let textStyle = NSMutableParagraphStyle()
-    textStyle.alignment = .center
-    let textFontAttributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 10), NSForegroundColorAttributeName: colour, NSParagraphStyleAttributeName: textStyle]
-
-    let textTextHeight: CGFloat = content.boundingRect(with: CGSize(width: textRect.width, height: CGFloat.infinity), options: .usesLineFragmentOrigin, attributes: textFontAttributes, context: nil).height
-    context.saveGState()
-    context.clip(to: textRect)
-    content.draw(in: CGRect(x: textRect.minX, y: textRect.minY + (textRect.height - textTextHeight) / 2, width: textRect.width, height: textTextHeight), withAttributes: textFontAttributes)
-    context.restoreGState()
-
-    context.restoreGState()
-}*/
 
 private class Gesture {
     var points: [CGPoint]
@@ -281,12 +297,7 @@ private class Gesture {
     }
 }
 
-private struct WeakReference<T: AnyObject> {
-    weak var value: T?
-    init(_ value: T) { self.value = value }
-}
-
-func monkeyHandPath(angle: CGFloat, scale: CGFloat, mirrored: Bool) -> UIBezierPath {
+private func monkeyHandPath(angle: CGFloat, scale: CGFloat, mirrored: Bool) -> UIBezierPath {
     let bezierPath = UIBezierPath()
     bezierPath.move(to: CGPoint(x: -5.91, y: 8.76))
     bezierPath.addCurve(to: CGPoint(x: -10.82, y: 2.15), controlPoint1: CGPoint(x: -9.18, y: 7.11), controlPoint2: CGPoint(x: -8.09, y: 4.9))
@@ -322,11 +333,11 @@ func monkeyHandPath(angle: CGFloat, scale: CGFloat, mirrored: Bool) -> UIBezierP
     return bezierPath
 }
 
-func circlePath() -> UIBezierPath {
+private func circlePath() -> UIBezierPath {
     return UIBezierPath(ovalIn: CGRect(centre: CGPoint.zero, size: CGSize(width: circleRadius * 2, height: circleRadius * 2)))
 }
 
-func crossPath() -> UIBezierPath {
+private func crossPath() -> UIBezierPath {
     let rect = CGRect(centre: CGPoint.zero, size: CGSize(width: crossRadius * 2, height: crossRadius * 2))
     let cross = UIBezierPath()
     cross.move(to: CGPoint(x: rect.minX, y: rect.minY))
@@ -334,6 +345,11 @@ func crossPath() -> UIBezierPath {
     cross.move(to: CGPoint(x: rect.minX, y: rect.maxY))
     cross.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
     return cross
+}
+
+private struct WeakReference<T: AnyObject> {
+    weak var value: T?
+    init(_ value: T) { self.value = value }
 }
 
 extension UIApplication {

@@ -5,9 +5,6 @@
 //  Created by Dag Agren on 23/03/16.
 //  Copyright © 2016 Zalando SE. All rights reserved.
 //
-//  Event generation using the private UIAutomation framework.
-//  Does not seem to work on actual devices for unknown reasons.
-//
 
 import UIKit
 
@@ -22,7 +19,25 @@ private let eventGenerator: UIASyntheticEvents = {
     return eventsclass.sharedEventGenerator()
 }()
 
+/**
+    Extension using private funcctions from the UIAutomation
+    API to generate events. Currently does not seem to work
+    on actual devices for unknown reasons.
+
+    The public XCTest API is far too slow for useful random testing,
+    so currently using private APIs is the only option.
+
+    As this code is only used in your tests, and never
+    distributed, it will not cause problems with App Store
+    approval.
+*/
 extension Monkey {
+    /**
+        Add a sane default set of event generation actions
+        using the private UIAutomation API. Use this function if you
+        just want to generate some events, and do not have
+        strong requirements on exactly which ones you need.
+    */
     public func addDefaultUIAutomationActions() {
         addUIAutomationTapAction(weight: 50)
         addUIAutomationDragAction(weight: 1)
@@ -37,12 +52,37 @@ extension Monkey {
         addUIAutomationLockAction(weight: 1)
     }
 
+    /**
+        Add an action that generates a single tap event
+        using the private UIAutomation API.
+
+        - Parameter weight: The relative probability of this
+          event being generated. Can be any value larger than
+          zero. Probabilities will be normalised to the sum
+          of all relative probabilities.
+    */
     public func addUIAutomationSingleTapAction(weight: Double) {
         addAction(weight: weight) { [weak self] in
             eventGenerator.sendTap(self!.randomPoint())
         }
     }
 
+    /**
+        Add an action that generates a tap, with a possibility for
+        multiple taps with multiple fingers, or long taps, using
+        the private UIAutomation API.
+
+        - parameter weight: The relative probability of this
+          event being generated. Can be any value larger than
+          zero. Probabilities will be normalised to the sum
+          of all relative probabilities.
+        - parameter multipleTapProbability: Probability that
+          the tap event will tap multiple times. Between 0 and 1.
+        - parameter multipleTouchProbability: Probability that
+          the tap event will use multiple fingers. Between 0 and 1.
+        - parameter longPressProbability: Probability that
+          the tap event will be a long press. Between 0 and 1.
+    */
     public func addUIAutomationTapAction(weight: Double, multipleTapProbability: Double = 0.05,
     multipleTouchProbability: Double = 0.05, longPressProbability: Double = 0.05) {
         addAction(weight: weight) { [weak self] in
@@ -74,6 +114,15 @@ extension Monkey {
         }
     }
 
+    /**
+        Add an action that generates a drag event from one random
+        screen position to another using the private UIAutomation API.
+
+        - Parameter weight: The relative probability of this
+          event being generated. Can be any value larger than
+          zero. Probabilities will be normalised to the sum
+          of all relative probabilities.
+    */
     public func addUIAutomationDragAction(weight: Double) {
         addAction(weight: weight) { [weak self] in
             let start = self!.randomPoint()
@@ -82,6 +131,15 @@ extension Monkey {
         }
     }
 
+    /**
+        Add an action that generates a flick event from one random
+        screen position to another using the private UIAutomation API.
+
+        - Parameter weight: The relative probability of this
+          event being generated. Can be any value larger than
+          zero. Probabilities will be normalised to the sum
+          of all relative probabilities.
+    */
     public func addUIAutomationFlickAction(weight: Double) {
         addAction(weight: weight) { [weak self] in
             let start = self!.randomPoint()
@@ -90,6 +148,15 @@ extension Monkey {
         }
     }
 
+    /**
+        Add an action that generates a pinch close gesture
+        at a random screen position using the private UIAutomation API.
+
+        - Parameter weight: The relative probability of this
+          event being generated. Can be any value larger than
+          zero. Probabilities will be normalised to the sum
+          of all relative probabilities.
+    */
     public func addUIAutomationPinchCloseAction(weight: Double) {
         addAction(weight: weight) { [weak self] in
             let start = self!.randomPoint()
@@ -98,6 +165,15 @@ extension Monkey {
         }
     }
 
+    /**
+        Add an action that generates a pinch open gesture
+        at a random screen position using the private UIAutomation API.
+
+        - Parameter weight: The relative probability of this
+          event being generated. Can be any value larger than
+          zero. Probabilities will be normalised to the sum
+          of all relative probabilities.
+    */
     public func addUIAutomationPinchOpenAction(weight: Double) {
         addAction(weight: weight) { [weak self] in
             let start = self!.randomPoint()
@@ -106,6 +182,16 @@ extension Monkey {
         }
     }
 
+    /**
+        Add an action that generates a rotation gesture
+        at a random screen position over a random angle
+        using the private UIAutomation API.
+
+        - Parameter weight: The relative probability of this
+          event being generated. Can be any value larger than
+          zero. Probabilities will be normalised to the sum
+          of all relative probabilities.
+    */
     public func addUIAutomationRotateAction(weight: Double) {
         // Not working for some reason.
         addAction(weight: weight) { [weak self] in
@@ -116,6 +202,15 @@ extension Monkey {
         }
     }
 
+    /**
+        Add an action that generates a device rotation event
+        using the private UIAutomation API.
+
+        - Parameter weight: The relative probability of this
+          event being generated. Can be any value larger than
+          zero. Probabilities will be normalised to the sum
+          of all relative probabilities.
+    */
     public func addUIAutomationOrientationAction(weight: Double) {
         addAction(weight: weight) { [weak self] in
             let orientations: [UIDeviceOrientation] = [
@@ -135,24 +230,60 @@ extension Monkey {
         }
     }
 
+    /**
+        Add an action that generates a volume up click event
+        using the private UIAutomation API.
+
+        - Parameter weight: The relative probability of this
+          event being generated. Can be any value larger than
+          zero. Probabilities will be normalised to the sum
+          of all relative probabilities.
+    */
     public func addUIAutomationClickVolumeUpAction(weight: Double) {
         addAction(weight: weight) {
             eventGenerator.clickVolumeUp()
         }
     }
 
+    /**
+        Add an action that generates a volume down click event
+        using the private UIAutomation API.
+
+        - Parameter weight: The relative probability of this
+          event being generated. Can be any value larger than
+          zero. Probabilities will be normalised to the sum
+          of all relative probabilities.
+    */
     public func addUIAutomationClickVolumeDownAction(weight: Double) {
         addAction(weight: weight) {
             eventGenerator.clickVolumeDown()
         }
     }
 
+    /**
+        Add an action that generates a shake event
+        using the private UIAutomation API.
+
+        - Parameter weight: The relative probability of this
+          event being generated. Can be any value larger than
+          zero. Probabilities will be normalised to the sum
+          of all relative probabilities.
+    */
     public func addUIAutomationShakeAction(weight: Double) {
         addAction(weight: weight) {
             eventGenerator.shake()
         }
     }
 
+    /**
+        Add an action that generates a lock button click event and
+        subsequent unlock drag event using the private UIAutomation API.
+
+        - Parameter weight: The relative probability of this
+          event being generated. Can be any value larger than
+          zero. Probabilities will be normalised to the sum
+          of all relative probabilities.
+    */
     public func addUIAutomationLockAction(weight: Double) {
         addAction(weight: weight) { [weak self] in
             let duration = 3 * self!.r.randomDouble()

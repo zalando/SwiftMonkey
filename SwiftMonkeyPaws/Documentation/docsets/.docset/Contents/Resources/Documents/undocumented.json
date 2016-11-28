@@ -1,0 +1,12 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/dagren/Code/SwiftMonkey/SwiftMonkeyPaws/MonkeyPaws.swift",
+      "line": 368,
+      "symbol": "CGRect.init(centre:size:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/dagren/Code/SwiftMonkey/SwiftMonkeyPaws"
+}

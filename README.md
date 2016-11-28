@@ -155,13 +155,17 @@ early on in your program execution:
 var paws: MonkeyPaws?
 
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-  paws = MonkeyPaws(view: window!)
-  return true
+    if CommandLine.arguments.contains("--MonkeyPaws") {
+        paws = MonkeyPaws(view: window!)
+    }
+    return true
 }
 ````
 
 (This example uses `application(_, didFinishLaunchingWithOptions)`,
-but any time after you have a UIWindow will do.)
+but any time after you have a UIWindow will do. It also only
+instatiates the visualisation if a certain command line flag
+is passed, so that it can be enabled only for test runs.)
 
 This call will swizzle some methods in UIApplication to capture
 UIEvents. If you would rather not do this, or if you already have
@@ -172,13 +176,10 @@ to disable swizzling:
 paws = MonkeyPaws(view: window!, tapUIApplication: false)
 ````
 
-Then you can pass in events or touches with either of the
-following calls:
+Then you can pass in events with the following call:
 
 ````swift
 paws?.append(event: event) // event is UIEvent
-
-paws?.append(touch: touch) // touch is UITouch
 ````
 
 ## Contributing

@@ -6,11 +6,12 @@
 //  Copyright © 2016 Zalando SE. All rights reserved.
 //
 
-// Simple implementation of a PCG random number generator:
-// http://www.pcg-random.org/
-
 import Foundation
 
+/**
+    Simple implementation of a PCG random number generator:
+    http://www.pcg-random.org/
+*/
 struct Random {
     var state: UInt64 = 0
     let increment: UInt64
@@ -39,11 +40,27 @@ struct Random {
         return (xorshifted >> rot) | (xorshifted << UInt32(-Int(rot) & 31))
     }
 
+    mutating func randomInt(lessThan: Int) -> Int {
+        return Int(randomUInt32() % UInt32(lessThan))
+    }
+
+    mutating func randomUInt(lessThan: UInt) -> UInt {
+        return UInt(randomUInt32() % UInt32(lessThan))
+    }
+
+    mutating func randomFloat() -> Float {
+        return Float(randomUInt32()) / 4294967296.0
+    }
+
+    mutating func randomFloat(lessThan: Float) -> Float {
+        return randomFloat() * lessThan
+    }
+
     mutating func randomDouble() -> Double {
         return Double(randomUInt32()) / 4294967296.0
     }
 
-    mutating func randomInt(_ upper: Int) -> Int {
-        return Int(randomUInt32() % UInt32(upper))
+    mutating func randomDouble(lessThan: Double) -> Double {
+        return randomDouble() * lessThan
     }
 }

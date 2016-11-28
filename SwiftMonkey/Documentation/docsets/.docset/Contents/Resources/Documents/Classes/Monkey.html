@@ -1,0 +1,2099 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Monkey Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/Monkey" class="dashAnchor"></a>
+    <a title="Monkey Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html"> Docs</a> (100% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html"> Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        Monkey Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/Monkey.html">Monkey</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Monkey</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">Monkey</span></code></pre>
+
+                </div>
+              </div>
+            <p>A general-purpose class for implementing randomised
+UI tests. This class lets you schedule blocks to be
+run at random or fixed intervals, and provides helper
+functions to generate random coordinates.</p>
+
+<p>It has several extensions that implement actual event
+generation, using different methods. For normal usage,
+you will want to look at for instance the XCTest private
+API based extension.</p>
+
+<p>If all you want to do is geneate some events and you do
+not care about the finer details, you can just use a
+test case like the following:</p>
+
+<pre class="highlight plaintext"><code>func testMonkey() {
+    let application = XCUIApplication()
+
+    // Workaround for bug in Xcode 7.3. Snapshots are not properly updated
+    // when you initially call app.frame, resulting in a zero-sized rect.
+    // Doing a random query seems to update everything properly.
+    // TODO: Remove this when the Xcode bug is fixed!
+    _ = application.descendants(matching: .any).element(boundBy: 0).frame
+
+    // Initialise the monkey tester with the current device
+    // frame. Giving an explicit seed will make it generate
+    // the same sequence of events on each run, and leaving it
+    // out will generate a new sequence on each run.
+    let monkey = Monkey(frame: application.frame)
+    //let monkey = Monkey(seed: 123, frame: application.frame)
+
+    // Add actions for the monkey to perform. We just use a
+    // default set of actions for this, which is usually enough.
+    // Use either one of these but maybe not both.
+    // XCTest private actions seem to work better at the moment.
+    // UIAutomation actions seem to work only on the simulator.
+    monkey.addDefaultXCTestPrivateActions()
+    //monkey.addDefaultUIAutomationActions()
+
+    // Occasionally, use the regular XCTest functionality
+    // to check if an alert is shown, and click a random
+    // button on it.
+    monkey.addXCTestTapAlertAction(interval: 100, application: application)
+
+    // Run the monkey test indefinitely.
+    monkey.monkeyAround()
+}
+</code></pre>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6MonkeycFT5frameVSC6CGRect_S0_"></a>
+                    <a name="//apple_ref/swift/Method/init(frame:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6MonkeycFT5frameVSC6CGRect_S0_">init(frame:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a Monkey object with a randomised seed.
+This instance will generate a different stream of
+events each time it is created.</p>
+
+<p>There is an XCTest bug to be aware of when finding
+the frame to use. Here is an example of how to work
+around this problem:</p>
+
+<pre class="highlight plaintext"><code>let application = XCUIApplication()
+
+// Workaround for bug in Xcode 7.3 and later. Snapshots are not properly
+// updated when you initially call app.frame, resulting in a zero-sized rect.
+// Doing a random query seems to update everything properly.
+_ = application.descendants(matching: .any).element(boundBy: 0).frame
+
+let monkey = Monkey(frame: application.frame)
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">frame</span><span class="p">:</span> <span class="kt">CGRect</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>frame</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The frame to generate events in. Should be set to the size of the device being tested.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6MonkeycFT4seedVs6UInt325frameVSC6CGRect_S0_"></a>
+                    <a name="//apple_ref/swift/Method/init(seed:frame:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6MonkeycFT4seedVs6UInt325frameVSC6CGRect_S0_">init(seed:frame:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a Monkey object with a fixed seed.
+This instance will generate the exact same stream of
+events each time it is created.
+Create a Monkey object with a randomised seed.
+This instance will generate a different stream of
+events each time it is created.</p>
+
+<p>There is an XCTest bug to be aware of when finding
+the frame to use. Here is an example of how to work
+around this problem:</p>
+
+<pre class="highlight plaintext"><code>let application = XCUIApplication()
+
+// Workaround for bug in Xcode 7.3 and later. Snapshots are not properly
+// updated when you initially call app.frame, resulting in a zero-sized rect.
+// Doing a random query seems to update everything properly.
+_ = application.descendants(matching: .any).element(boundBy: 0).frame
+
+let monkey = Monkey(seed: 0, frame: application.frame)
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">seed</span><span class="p">:</span> <span class="kt">UInt32</span><span class="p">,</span> <span class="nv">frame</span><span class="p">:</span> <span class="kt">CGRect</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>seed</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The random seed to use. Each value will generate a different stream of events.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>frame</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The frame to generate events in. Should be set to the size of the device being tested.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey12monkeyAroundFT10iterationsSi_T_"></a>
+                    <a name="//apple_ref/swift/Method/monkeyAround(iterations:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey12monkeyAroundFT10iterationsSi_T_">monkeyAround(iterations:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Generate a number of random events.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter iterations: The number of random events
+to generate. Does not include any fixed interval
+events that may also be generated.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">monkeyAround</span><span class="p">(</span><span class="nv">iterations</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>iterations</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The number of random events to generate. Does not include any fixed interval events that may also be generated.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey12monkeyAroundFT_T_"></a>
+                    <a name="//apple_ref/swift/Method/monkeyAround()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey12monkeyAroundFT_T_">monkeyAround()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Generate random events forever, or until the app crashes.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">monkeyAround</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey11actRandomlyFT_T_"></a>
+                    <a name="//apple_ref/swift/Method/actRandomly()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey11actRandomlyFT_T_">actRandomly()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Generate one random event.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">actRandomly</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey12actRegularlyFT_T_"></a>
+                    <a name="//apple_ref/swift/Method/actRegularly()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey12actRegularlyFT_T_">actRegularly()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Generate any pending fixed-interval events.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">actRegularly</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey9addActionFT6weightSd6actionFT_T__T_"></a>
+                    <a name="//apple_ref/swift/Method/addAction(weight:action:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey9addActionFT6weightSd6actionFT_T__T_">addAction(weight:action:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add a block for generating randomised events.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addAction</span><span class="p">(</span><span class="nv">weight</span><span class="p">:</span> <span class="kt">Double</span><span class="p">,</span> <span class="nv">action</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Void</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>weight</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The relative probability of this event being generated. Can be any value larger than zero. Probabilities will be normalised to the sum of all relative probabilities.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>action</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The block to run when this event is generated.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey9addActionFT8intervalSi6actionFT_T__T_"></a>
+                    <a name="//apple_ref/swift/Method/addAction(interval:action:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey9addActionFT8intervalSi6actionFT_T__T_">addAction(interval:action:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add a block for fixed-interval events.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addAction</span><span class="p">(</span><span class="nv">interval</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">action</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Void</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>interval</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>How often to generate this event. One of these events will be generated after this many randomised events have been generated.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>action</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The block to run when this event is generated.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey9randomIntFT8lessThanSi_Si"></a>
+                    <a name="//apple_ref/swift/Method/randomInt(lessThan:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey9randomIntFT8lessThanSi_Si">randomInt(lessThan:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Generate a random <code>Int</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">randomInt</span><span class="p">(</span><span class="nv">lessThan</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>lessThan</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The returned value will be less than this value, and greater than or equal to zero.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey10randomUIntFT8lessThanSu_Su"></a>
+                    <a name="//apple_ref/swift/Method/randomUInt(lessThan:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey10randomUIntFT8lessThanSu_Su">randomUInt(lessThan:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Generate a random <code>UInt</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">randomUInt</span><span class="p">(</span><span class="nv">lessThan</span><span class="p">:</span> <span class="kt">UInt</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UInt</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>lessThan</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The returned value will be less than this value, and greater than or equal to  zero.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey13randomCGFloatFT8lessThanV12CoreGraphics7CGFloat_S2_"></a>
+                    <a name="//apple_ref/swift/Method/randomCGFloat(lessThan:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey13randomCGFloatFT8lessThanV12CoreGraphics7CGFloat_S2_">randomCGFloat(lessThan:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Generate a random <code>CGFloat</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">randomCGFloat</span><span class="p">(</span><span class="nv">lessThan</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CGFloat</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>lessThan</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The returned value will be less than this value, and greater than or equal to zero.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey11randomPointFT_VSC7CGPoint"></a>
+                    <a name="//apple_ref/swift/Method/randomPoint()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey11randomPointFT_VSC7CGPoint">randomPoint()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Generate a random <code>CGPoint</code> inside the frame of the app.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">randomPoint</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">CGPoint</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey11randomPointFT6inRectVSC6CGRect_VSC7CGPoint"></a>
+                    <a name="//apple_ref/swift/Method/randomPoint(inRect:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey11randomPointFT6inRectVSC6CGRect_VSC7CGPoint">randomPoint(inRect:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Generate a random <code>CGPoint</code> inside the given <code>CGRect</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">randomPoint</span><span class="p">(</span><span class="n">inRect</span> <span class="nv">rect</span><span class="p">:</span> <span class="kt">CGRect</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CGPoint</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>inRect</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The rect within which to pick the point.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey10randomRectFT_VSC6CGRect"></a>
+                    <a name="//apple_ref/swift/Method/randomRect()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey10randomRectFT_VSC6CGRect">randomRect()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Generate a random <code>CGRect</code> inside the frame of the app.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">randomRect</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">CGRect</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey10randomRectFT12sizeFractionV12CoreGraphics7CGFloat_VSC6CGRect"></a>
+                    <a name="//apple_ref/swift/Method/randomRect(sizeFraction:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey10randomRectFT12sizeFractionV12CoreGraphics7CGFloat_VSC6CGRect">randomRect(sizeFraction:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Generate a random <code>CGRect</code> inside the frame of the app,
+sized to a given fraction of the whole frame.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">randomRect</span><span class="p">(</span><span class="nv">sizeFraction</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CGRect</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sizeFraction</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The fraction of the size of the frame to use as the of the area for generated points.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey21randomClusteredPointsFT5countSi_GSaVSC7CGPoint_"></a>
+                    <a name="//apple_ref/swift/Method/randomClusteredPoints(count:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey21randomClusteredPointsFT5countSi_GSaVSC7CGPoint_">randomClusteredPoints(count:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Generate an array of random <code>CGPoints</code> in a loose cluster.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">randomClusteredPoints</span><span class="p">(</span><span class="nv">count</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">CGPoint</span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey29addDefaultUIAutomationActionsFT_T_"></a>
+                    <a name="//apple_ref/swift/Method/addDefaultUIAutomationActions()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey29addDefaultUIAutomationActionsFT_T_">addDefaultUIAutomationActions()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add a sane default set of event generation actions
+using the private UIAutomation API. Use this function if you
+just want to generate some events, and do not have
+strong requirements on exactly which ones you need.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addDefaultUIAutomationActions</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey30addUIAutomationSingleTapActionFT6weightSd_T_"></a>
+                    <a name="//apple_ref/swift/Method/addUIAutomationSingleTapAction(weight:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey30addUIAutomationSingleTapActionFT6weightSd_T_">addUIAutomationSingleTapAction(weight:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add an action that generates a single tap event
+using the private UIAutomation API.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter weight: The relative probability of this
+event being generated. Can be any value larger than
+zero. Probabilities will be normalised to the sum
+of all relative probabilities.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addUIAutomationSingleTapAction</span><span class="p">(</span><span class="nv">weight</span><span class="p">:</span> <span class="kt">Double</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>weight</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The relative probability of this event being generated. Can be any value larger than zero. Probabilities will be normalised to the sum of all relative probabilities.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey24addUIAutomationTapActionFT6weightSd22multipleTapProbabilitySd24multipleTouchProbabilitySd20longPressProbabilitySd_T_"></a>
+                    <a name="//apple_ref/swift/Method/addUIAutomationTapAction(weight:multipleTapProbability:multipleTouchProbability:longPressProbability:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey24addUIAutomationTapActionFT6weightSd22multipleTapProbabilitySd24multipleTouchProbabilitySd20longPressProbabilitySd_T_">addUIAutomationTapAction(weight:multipleTapProbability:multipleTouchProbability:longPressProbability:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add an action that generates a tap, with a possibility for
+multiple taps with multiple fingers, or long taps, using
+the private UIAutomation API.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addUIAutomationTapAction</span><span class="p">(</span><span class="nv">weight</span><span class="p">:</span> <span class="kt">Double</span><span class="p">,</span> <span class="nv">multipleTapProbability</span><span class="p">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
+    <span class="nv">multipleTouchProbability</span><span class="p">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span> <span class="nv">longPressProbability</span><span class="p">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>weight</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The relative probability of this event being generated. Can be any value larger than zero. Probabilities will be normalised to the sum of all relative probabilities.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>multipleTapProbability</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Probability that the tap event will tap multiple times. Between 0 and 1.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>multipleTouchProbability</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Probability that the tap event will use multiple fingers. Between 0 and 1.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>longPressProbability</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Probability that the tap event will be a long press. Between 0 and 1.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey25addUIAutomationDragActionFT6weightSd_T_"></a>
+                    <a name="//apple_ref/swift/Method/addUIAutomationDragAction(weight:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey25addUIAutomationDragActionFT6weightSd_T_">addUIAutomationDragAction(weight:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add an action that generates a drag event from one random
+screen position to another using the private UIAutomation API.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter weight: The relative probability of this
+event being generated. Can be any value larger than
+zero. Probabilities will be normalised to the sum
+of all relative probabilities.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addUIAutomationDragAction</span><span class="p">(</span><span class="nv">weight</span><span class="p">:</span> <span class="kt">Double</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>weight</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The relative probability of this event being generated. Can be any value larger than zero. Probabilities will be normalised to the sum of all relative probabilities.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey26addUIAutomationFlickActionFT6weightSd_T_"></a>
+                    <a name="//apple_ref/swift/Method/addUIAutomationFlickAction(weight:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey26addUIAutomationFlickActionFT6weightSd_T_">addUIAutomationFlickAction(weight:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add an action that generates a flick event from one random
+screen position to another using the private UIAutomation API.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter weight: The relative probability of this
+event being generated. Can be any value larger than
+zero. Probabilities will be normalised to the sum
+of all relative probabilities.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addUIAutomationFlickAction</span><span class="p">(</span><span class="nv">weight</span><span class="p">:</span> <span class="kt">Double</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>weight</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The relative probability of this event being generated. Can be any value larger than zero. Probabilities will be normalised to the sum of all relative probabilities.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey31addUIAutomationPinchCloseActionFT6weightSd_T_"></a>
+                    <a name="//apple_ref/swift/Method/addUIAutomationPinchCloseAction(weight:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey31addUIAutomationPinchCloseActionFT6weightSd_T_">addUIAutomationPinchCloseAction(weight:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add an action that generates a pinch close gesture
+at a random screen position using the private UIAutomation API.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter weight: The relative probability of this
+event being generated. Can be any value larger than
+zero. Probabilities will be normalised to the sum
+of all relative probabilities.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addUIAutomationPinchCloseAction</span><span class="p">(</span><span class="nv">weight</span><span class="p">:</span> <span class="kt">Double</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>weight</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The relative probability of this event being generated. Can be any value larger than zero. Probabilities will be normalised to the sum of all relative probabilities.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey30addUIAutomationPinchOpenActionFT6weightSd_T_"></a>
+                    <a name="//apple_ref/swift/Method/addUIAutomationPinchOpenAction(weight:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey30addUIAutomationPinchOpenActionFT6weightSd_T_">addUIAutomationPinchOpenAction(weight:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add an action that generates a pinch open gesture
+at a random screen position using the private UIAutomation API.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter weight: The relative probability of this
+event being generated. Can be any value larger than
+zero. Probabilities will be normalised to the sum
+of all relative probabilities.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addUIAutomationPinchOpenAction</span><span class="p">(</span><span class="nv">weight</span><span class="p">:</span> <span class="kt">Double</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>weight</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The relative probability of this event being generated. Can be any value larger than zero. Probabilities will be normalised to the sum of all relative probabilities.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey27addUIAutomationRotateActionFT6weightSd_T_"></a>
+                    <a name="//apple_ref/swift/Method/addUIAutomationRotateAction(weight:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey27addUIAutomationRotateActionFT6weightSd_T_">addUIAutomationRotateAction(weight:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add an action that generates a rotation gesture
+at a random screen position over a random angle
+using the private UIAutomation API.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter weight: The relative probability of this
+event being generated. Can be any value larger than
+zero. Probabilities will be normalised to the sum
+of all relative probabilities.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addUIAutomationRotateAction</span><span class="p">(</span><span class="nv">weight</span><span class="p">:</span> <span class="kt">Double</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>weight</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The relative probability of this event being generated. Can be any value larger than zero. Probabilities will be normalised to the sum of all relative probabilities.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey32addUIAutomationOrientationActionFT6weightSd_T_"></a>
+                    <a name="//apple_ref/swift/Method/addUIAutomationOrientationAction(weight:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey32addUIAutomationOrientationActionFT6weightSd_T_">addUIAutomationOrientationAction(weight:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add an action that generates a device rotation event
+using the private UIAutomation API.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter weight: The relative probability of this
+event being generated. Can be any value larger than
+zero. Probabilities will be normalised to the sum
+of all relative probabilities.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addUIAutomationOrientationAction</span><span class="p">(</span><span class="nv">weight</span><span class="p">:</span> <span class="kt">Double</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>weight</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The relative probability of this event being generated. Can be any value larger than zero. Probabilities will be normalised to the sum of all relative probabilities.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey34addUIAutomationClickVolumeUpActionFT6weightSd_T_"></a>
+                    <a name="//apple_ref/swift/Method/addUIAutomationClickVolumeUpAction(weight:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey34addUIAutomationClickVolumeUpActionFT6weightSd_T_">addUIAutomationClickVolumeUpAction(weight:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add an action that generates a volume up click event
+using the private UIAutomation API.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter weight: The relative probability of this
+event being generated. Can be any value larger than
+zero. Probabilities will be normalised to the sum
+of all relative probabilities.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addUIAutomationClickVolumeUpAction</span><span class="p">(</span><span class="nv">weight</span><span class="p">:</span> <span class="kt">Double</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>weight</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The relative probability of this event being generated. Can be any value larger than zero. Probabilities will be normalised to the sum of all relative probabilities.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey36addUIAutomationClickVolumeDownActionFT6weightSd_T_"></a>
+                    <a name="//apple_ref/swift/Method/addUIAutomationClickVolumeDownAction(weight:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey36addUIAutomationClickVolumeDownActionFT6weightSd_T_">addUIAutomationClickVolumeDownAction(weight:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add an action that generates a volume down click event
+using the private UIAutomation API.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter weight: The relative probability of this
+event being generated. Can be any value larger than
+zero. Probabilities will be normalised to the sum
+of all relative probabilities.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addUIAutomationClickVolumeDownAction</span><span class="p">(</span><span class="nv">weight</span><span class="p">:</span> <span class="kt">Double</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>weight</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The relative probability of this event being generated. Can be any value larger than zero. Probabilities will be normalised to the sum of all relative probabilities.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey26addUIAutomationShakeActionFT6weightSd_T_"></a>
+                    <a name="//apple_ref/swift/Method/addUIAutomationShakeAction(weight:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey26addUIAutomationShakeActionFT6weightSd_T_">addUIAutomationShakeAction(weight:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add an action that generates a shake event
+using the private UIAutomation API.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter weight: The relative probability of this
+event being generated. Can be any value larger than
+zero. Probabilities will be normalised to the sum
+of all relative probabilities.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addUIAutomationShakeAction</span><span class="p">(</span><span class="nv">weight</span><span class="p">:</span> <span class="kt">Double</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>weight</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The relative probability of this event being generated. Can be any value larger than zero. Probabilities will be normalised to the sum of all relative probabilities.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey25addUIAutomationLockActionFT6weightSd_T_"></a>
+                    <a name="//apple_ref/swift/Method/addUIAutomationLockAction(weight:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey25addUIAutomationLockActionFT6weightSd_T_">addUIAutomationLockAction(weight:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add an action that generates a lock button click event and
+subsequent unlock drag event using the private UIAutomation API.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter weight: The relative probability of this
+event being generated. Can be any value larger than
+zero. Probabilities will be normalised to the sum
+of all relative probabilities.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addUIAutomationLockAction</span><span class="p">(</span><span class="nv">weight</span><span class="p">:</span> <span class="kt">Double</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>weight</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The relative probability of this event being generated. Can be any value larger than zero. Probabilities will be normalised to the sum of all relative probabilities.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey23addXCTestTapAlertActionFT8intervalSi11applicationCSo15XCUIApplication_T_"></a>
+                    <a name="//apple_ref/swift/Method/addXCTestTapAlertAction(interval:application:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey23addXCTestTapAlertActionFT8intervalSi11applicationCSo15XCUIApplication_T_">addXCTestTapAlertAction(interval:application:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add an action that checks, at a fixed interval,
+if an alert is being displayed, and if so, selects
+a random button on it.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addXCTestTapAlertAction</span><span class="p">(</span><span class="nv">interval</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">XCUIApplication</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>interval</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>How often to generate this event. One of these events will be generated after this many randomised events have been generated.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>application</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The <code>XCUIApplication</code> object for the current application.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey30addDefaultXCTestPrivateActionsFT_T_"></a>
+                    <a name="//apple_ref/swift/Method/addDefaultXCTestPrivateActions()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey30addDefaultXCTestPrivateActionsFT_T_">addDefaultXCTestPrivateActions()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add a sane default set of event generation actions
+using the private XCTest API. Use this function if you
+just want to generate some events, and do not have
+strong requirements on exactly which ones you need.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addDefaultXCTestPrivateActions</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey18addXCTestTapActionFT6weightSd22multipleTapProbabilitySd24multipleTouchProbabilitySd_T_"></a>
+                    <a name="//apple_ref/swift/Method/addXCTestTapAction(weight:multipleTapProbability:multipleTouchProbability:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey18addXCTestTapActionFT6weightSd22multipleTapProbabilitySd24multipleTouchProbabilitySd_T_">addXCTestTapAction(weight:multipleTapProbability:multipleTouchProbability:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add an action that generates a tap, with a possibility for
+multiple taps with multiple fingers, using the private
+XCTest API.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addXCTestTapAction</span><span class="p">(</span><span class="nv">weight</span><span class="p">:</span> <span class="kt">Double</span><span class="p">,</span> <span class="nv">multipleTapProbability</span><span class="p">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
+    <span class="nv">multipleTouchProbability</span><span class="p">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>weight</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The relative probability of this event being generated. Can be any value larger than zero. Probabilities will be normalised to the sum of all relative probabilities.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>multipleTapProbability</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Probability that the tap event will tap multiple times. Between 0 and 1.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>multipleTouchProbability</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Probability that the tap event will use multiple fingers. Between 0 and 1.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey24addXCTestLongPressActionFT6weightSd_T_"></a>
+                    <a name="//apple_ref/swift/Method/addXCTestLongPressAction(weight:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey24addXCTestLongPressActionFT6weightSd_T_">addXCTestLongPressAction(weight:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add an action that generates a long press event
+using the private XCTest API.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter weight: The relative probability of this
+event being generated. Can be any value larger than
+zero. Probabilities will be normalised to the sum
+of all relative probabilities.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addXCTestLongPressAction</span><span class="p">(</span><span class="nv">weight</span><span class="p">:</span> <span class="kt">Double</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>weight</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The relative probability of this event being generated. Can be any value larger than zero. Probabilities will be normalised to the sum of all relative probabilities.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey19addXCTestDragActionFT6weightSd_T_"></a>
+                    <a name="//apple_ref/swift/Method/addXCTestDragAction(weight:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey19addXCTestDragActionFT6weightSd_T_">addXCTestDragAction(weight:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add an action that generates a drag event from one random
+screen position to another using the private XCTest API.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter weight: The relative probability of this
+event being generated. Can be any value larger than
+zero. Probabilities will be normalised to the sum
+of all relative probabilities.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addXCTestDragAction</span><span class="p">(</span><span class="nv">weight</span><span class="p">:</span> <span class="kt">Double</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>weight</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The relative probability of this event being generated. Can be any value larger than zero. Probabilities will be normalised to the sum of all relative probabilities.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey25addXCTestPinchCloseActionFT6weightSd_T_"></a>
+                    <a name="//apple_ref/swift/Method/addXCTestPinchCloseAction(weight:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey25addXCTestPinchCloseActionFT6weightSd_T_">addXCTestPinchCloseAction(weight:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add an action that generates a pinch close gesture
+at a random screen position using the private XCTest API.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter weight: The relative probability of this
+event being generated. Can be any value larger than
+zero. Probabilities will be normalised to the sum
+of all relative probabilities.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addXCTestPinchCloseAction</span><span class="p">(</span><span class="nv">weight</span><span class="p">:</span> <span class="kt">Double</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>weight</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The relative probability of this event being generated. Can be any value larger than zero. Probabilities will be normalised to the sum of all relative probabilities.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey24addXCTestPinchOpenActionFT6weightSd_T_"></a>
+                    <a name="//apple_ref/swift/Method/addXCTestPinchOpenAction(weight:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey24addXCTestPinchOpenActionFT6weightSd_T_">addXCTestPinchOpenAction(weight:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add an action that generates a pinch open gesture
+at a random screen position using the private XCTest API.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter weight: The relative probability of this
+event being generated. Can be any value larger than
+zero. Probabilities will be normalised to the sum
+of all relative probabilities.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addXCTestPinchOpenAction</span><span class="p">(</span><span class="nv">weight</span><span class="p">:</span> <span class="kt">Double</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>weight</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The relative probability of this event being generated. Can be any value larger than zero. Probabilities will be normalised to the sum of all relative probabilities.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey21addXCTestRotateActionFT6weightSd_T_"></a>
+                    <a name="//apple_ref/swift/Method/addXCTestRotateAction(weight:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey21addXCTestRotateActionFT6weightSd_T_">addXCTestRotateAction(weight:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add an action that generates a rotation gesture
+at a random screen position over a random angle
+using the private XCTest API.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter weight: The relative probability of this
+event being generated. Can be any value larger than
+zero. Probabilities will be normalised to the sum
+of all relative probabilities.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addXCTestRotateAction</span><span class="p">(</span><span class="nv">weight</span><span class="p">:</span> <span class="kt">Double</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>weight</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The relative probability of this event being generated. Can be any value larger than zero. Probabilities will be normalised to the sum of all relative probabilities.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11SwiftMonkey6Monkey26addXCTestOrientationActionFT6weightSd_T_"></a>
+                    <a name="//apple_ref/swift/Method/addXCTestOrientationAction(weight:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11SwiftMonkey6Monkey26addXCTestOrientationActionFT6weightSd_T_">addXCTestOrientationAction(weight:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add an action that generates a device rotation event
+using the private XCTest API. Does not currently work!</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter weight: The relative probability of this
+event being generated. Can be any value larger than
+zero. Probabilities will be normalised to the sum
+of all relative probabilities.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addXCTestOrientationAction</span><span class="p">(</span><span class="nv">weight</span><span class="p">:</span> <span class="kt">Double</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>weight</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The relative probability of this event being generated. Can be any value larger than zero. Probabilities will be normalised to the sum of all relative probabilities.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-11-28)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
