@@ -63,11 +63,11 @@ can use something like this in your `Podfile`:
 
 ````ruby
 target "App" do
-    pod "SwiftMonkeyPaws", :git => "https://github.com/zalando/SwiftMonkey.git"
+    pod "SwiftMonkeyPaws", "~> 1.0"
 end
-    
+
 target "Tests" do
-    pod "SwiftMonkey", :git => "https://github.com/zalando/SwiftMonkey.git"
+    pod "SwiftMonkey", "~> 1.0"
 end
 ````
 
