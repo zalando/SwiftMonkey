@@ -118,9 +118,23 @@ extension Monkey {
     */
     public func addXCTestDragAction(weight: Double) {
         addAction(weight: weight) { [weak self] in
-            let start = self!.randomPoint()
+            var start = self!.randomPoint()
             let end = self!.randomPoint()
-
+            
+            let height = self!.frame.size.height
+            let width = self!.frame.size.width
+            
+            let notificationBarArea = CGRect(x: 0.0, y: 0.0, width: width, height: 20.0)
+            let controlCenterArea = CGRect(x: 0.0, y: height - 20.0, width: width, height: 20.0)
+            
+            if ((notificationBarArea).contains(start) || (controlCenterArea).contains(start)) {
+                for _ in 1...5 {
+                    if ((notificationBarArea).contains(start) || (controlCenterArea).contains(start)) {
+                        start = self!.randomPoint()
+                    }
+                }
+            }
+            
             let semaphore = DispatchSemaphore(value: 0)
             self!.sharedXCEventGenerator.pressAtPoint(start, forDuration: 0, liftAtPoint: end, velocity: 1000, orientation: orientationValue, name: "Monkey drag" as NSString) {
                 semaphore.signal()
@@ -128,7 +142,7 @@ extension Monkey {
             semaphore.wait()
         }
     }
-
+    
     /**
         Add an action that generates a pinch close gesture
         at a random screen position using the private XCTest API.
