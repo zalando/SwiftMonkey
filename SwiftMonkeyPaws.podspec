@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "SwiftMonkeyPaws"
-  s.version      = "1.0.0"
+  s.version      = "1.0.1"
   s.summary      = "Visualisation of input events, especially useful during UI testing."
   s.description  = <<-DESC
                    Visualise all touch events in a layer on top of
