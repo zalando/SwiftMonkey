@@ -241,6 +241,18 @@ public class Monkey {
     }
 
     /**
+        Generate a random `CGPoint` inside the frame of the app,
+        avoiding the areas at the top and bottom of the screen
+        that trigger a panel pull-out.
+    */
+    public func randomPointAvoidingPanelAreas() -> CGPoint {
+        let topHeight: CGFloat = 20
+        let bottomHeight: CGFloat = 20
+        let frameWithoutTopAndBottom = CGRect(x: 0, y: topHeight, width: frame.width, height: frame.height - topHeight - bottomHeight)
+        return randomPoint(inRect: frameWithoutTopAndBottom)
+    }
+
+    /**
         Generate a random `CGPoint` inside the given `CGRect`.
 
         - parameter inRect: The rect within which to pick the point.

@@ -125,7 +125,7 @@ extension Monkey {
     */
     public func addUIAutomationDragAction(weight: Double) {
         addAction(weight: weight) { [weak self] in
-            let start = self!.randomPoint()
+            let start = self!.randomPointAvoidingPanelAreas()
             let end = self!.randomPoint()
             eventGenerator.sendDragWithStartPoint(start, endPoint: end, duration: 0.5)
         }
@@ -142,7 +142,7 @@ extension Monkey {
     */
     public func addUIAutomationFlickAction(weight: Double) {
         addAction(weight: weight) { [weak self] in
-            let start = self!.randomPoint()
+            let start = self!.randomPointAvoidingPanelAreas()
             let end = self!.randomPoint()
             eventGenerator.sendFlickWithStartPoint(start, endPoint: end, duration: 0.5)
         }
