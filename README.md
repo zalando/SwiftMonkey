@@ -201,6 +201,7 @@ of conduct for this project:
 * The Zalando Open Source Guild for helping get this project
   off the ground.
 * João Nunes for help with documentation.
+* Jakub Mucha for bugfixing.
 
 ## TODO
 
