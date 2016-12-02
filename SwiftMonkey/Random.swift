@@ -26,7 +26,7 @@ struct Random {
 
     init(seed: UInt32, sequence: UInt32) {
         state = 0
-        increment = (UInt64(sequence) << 1) | 1;
+        increment = (UInt64(sequence) << 1) | 1
         _ = randomUInt32()
         state = state &+ UInt64(seed)
         _ = randomUInt32()
