@@ -13,7 +13,7 @@ import XCTest
     Extension using the public XCTest API to generate
     events.
 */
-
+@available(iOS 9.0, *)
 extension Monkey {
 
     /**
