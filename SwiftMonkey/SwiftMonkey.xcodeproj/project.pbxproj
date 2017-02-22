@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		015E9ADB1E5D9C9800626726 /* SwiftMonkey-Swift.h in Headers */ = {isa = PBXBuildFile; fileRef = 015E9AD91E5D9C8B00626726 /* SwiftMonkey-Swift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C929B55F1DD0B966004B256F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C929B55E1DD0B966004B256F /* UIKit.framework */; };
 		C94326421DDB2F260038A891 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C94326411DDB2F260038A891 /* XCTest.framework */; };
 		OBJ_22 /* Monkey.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* Monkey.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		015E9AD91E5D9C8B00626726 /* SwiftMonkey-Swift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SwiftMonkey-Swift.h"; sourceTree = SOURCE_ROOT; };
 		C929B55E1DD0B966004B256F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C94326401DDB2D130038A891 /* SwiftMonkey.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = SwiftMonkey.podspec; path = ../SwiftMonkey.podspec; sourceTree = "<group>"; };
 		C94326411DDB2F260038A891 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -89,6 +91,7 @@
 		OBJ_8 /* SwiftMonkey */ = {
 			isa = PBXGroup;
 			children = (
+				015E9AD91E5D9C8B00626726 /* SwiftMonkey-Swift.h */,
 				OBJ_9 /* Monkey.swift */,
 				OBJ_11 /* MonkeyXCTest.swift */,
 				OBJ_12 /* MonkeyXCTestPrivate.swift */,
@@ -101,6 +104,17 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		015E9ADA1E5D9C9100626726 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				015E9ADB1E5D9C9800626726 /* SwiftMonkey-Swift.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		OBJ_17 /* SwiftMonkey */ = {
 			isa = PBXNativeTarget;
@@ -108,6 +122,7 @@
 			buildPhases = (
 				OBJ_21 /* Sources */,
 				OBJ_27 /* Frameworks */,
+				015E9ADA1E5D9C9100626726 /* Headers */,
 			);
 			buildRules = (
 			);
@@ -169,7 +184,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
 				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = SwiftMonkey;
 				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -183,7 +197,7 @@
 		OBJ_20 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ENABLE_TESTABILITY = YES;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(PLATFORM_DIR)/Developer/Library/Frameworks";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = SwiftMonkey.xcodeproj/SwiftMonkey_Info.plist;
