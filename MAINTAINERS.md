@@ -1,1 +1,1 @@
-<dag.agren@zalando.fi>
+wojciech.lukasz.czerski@zalando.de
