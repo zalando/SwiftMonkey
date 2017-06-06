@@ -228,7 +228,7 @@ private class Gesture {
 
         let pathLayer = self.pathLayer ?? { () -> CAShapeLayer in
             let newLayer = CAShapeLayer()
-            newLayer.strokeColor = startLayer.strokeColor
+            newLayer.strokeColor = self.startLayer.strokeColor
             newLayer.fillColor = nil
 
             let maskPath = CGMutablePath()
@@ -238,11 +238,11 @@ private class Gesture {
             let maskLayer = CAShapeLayer()
             maskLayer.path = maskPath
             maskLayer.fillRule = kCAFillRuleEvenOdd
-            maskLayer.position = startLayer.position
+            maskLayer.position = self.startLayer.position
             newLayer.mask = maskLayer
 
             self.pathLayer = newLayer
-            containerLayer.addSublayer(newLayer)
+            self.containerLayer.addSublayer(newLayer)
 
             return newLayer
         }()
