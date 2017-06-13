@@ -93,7 +93,7 @@ class BananaViewController: UIViewController, UIGestureRecognizerDelegate {
                 let frameLength = 1 / Double(steps)
                 let startTime = Double(i) * frameLength
                 let endTime = Double(i + 1) * frameLength
-                let curve = (1 - cos(2 * M_PI * endTime * 3)) / 2 * exp(-endTime * 5)
+                let curve = (1 - cos(2 * Double.pi * endTime * 3)) / 2 * exp(-endTime * 5)
                 let scale = CGFloat(1 + 0.5 * curve)
                 UIView.addKeyframe(withRelativeStartTime: startTime, relativeDuration: frameLength, animations: {
                     banana.transform = CGAffineTransform(scaleX: scale, y: scale).concatenating(self.currentTransform)
