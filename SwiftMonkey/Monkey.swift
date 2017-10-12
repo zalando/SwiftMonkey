@@ -147,12 +147,16 @@ public class Monkey {
         }
     }
 
-    /// Generate random events forever, or until the app crashes.
-    public func monkeyAround() {
-        while true {
+    /// Generate random events or fixed-interval events based forever, for a specific duration or until the app crashes.
+    ///
+    /// - Parameter duration: The duration for which to generate the random events.
+    ///                       Set to `.infinity` by default.
+    public func monkeyAround(forDuration duration: TimeInterval = .infinity) {
+        let monkeyTestingTime = Date().timeIntervalSince1970
+        repeat {
             actRandomly()
             actRegularly()
-        }
+        } while ((Date().timeIntervalSince1970 - monkeyTestingTime) < duration)
     }
 
     /// Generate one random event.
