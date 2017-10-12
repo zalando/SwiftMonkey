@@ -62,10 +62,10 @@ public class Monkey {
     var r: Random
     let frame: CGRect
 
-    var randomActions: [(accumulatedWeight: Double, action: (Void) -> Void)]
+    var randomActions: [(accumulatedWeight: Double, action: () -> Void)]
     var totalWeight: Double
 
-    var regularActions: [(interval: Int, action: (Void) -> Void)]
+    var regularActions: [(interval: Int, action: () -> Void)]
     var actionCounter = 0
 
     /**
@@ -191,7 +191,7 @@ public class Monkey {
         - parameter action: The block to run when this event
           is generated.
     */
-    public func addAction(weight: Double, action: @escaping (Void) -> Void) {
+    public func addAction(weight: Double, action: @escaping () -> Void) {
         totalWeight += weight
         randomActions.append((accumulatedWeight: totalWeight, action: action))
     }
@@ -205,7 +205,7 @@ public class Monkey {
         - parameter action: The block to run when this event
           is generated.
     */
-    public func addAction(interval: Int, action: @escaping (Void) -> Void) {
+    public func addAction(interval: Int, action: @escaping () -> Void) {
         regularActions.append((interval: interval, action: action))
     }
 
