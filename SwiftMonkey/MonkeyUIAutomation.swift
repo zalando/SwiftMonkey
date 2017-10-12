@@ -197,7 +197,7 @@ extension Monkey {
         addAction(weight: weight) { [weak self] in
             let point = self!.randomPoint()
             let radius = self!.r.randomDouble() * 100 + 50
-            let angle = self!.r.randomDouble() * 2 * M_PI
+            let angle = self!.r.randomDouble() * 2 * Double.pi
             eventGenerator.sendRotate(point, withRadius: radius, rotation: angle, duration: 0.5, touchCount: 2)
         }
     }
