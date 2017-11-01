@@ -60,13 +60,15 @@ import XCTest
     ```
 */
 public class Monkey {
+    public typealias ActionClosure = () -> Void
+
     var r: Random
     let frame: CGRect
 
-    var randomActions: [(accumulatedWeight: Double, action: () -> Void)]
+    var randomActions: [(accumulatedWeight: Double, action: ActionClosure)]
     var totalWeight: Double
 
-    var regularActions: [(interval: Int, action: () -> Void)]
+    var regularActions: [(interval: Int, action: ActionClosure)]
     var actionCounter = 0
 
     /**
@@ -192,7 +194,7 @@ public class Monkey {
         - parameter action: The block to run when this event
           is generated.
     */
-    public func addAction(weight: Double, action: @escaping () -> Void) {
+    public func addAction(weight: Double, action: @escaping ActionClosure) {
         totalWeight += weight
         randomActions.append((accumulatedWeight: totalWeight, action: actInForeground(action)))
     }
@@ -206,23 +208,21 @@ public class Monkey {
         - parameter action: The block to run when this event
           is generated.
     */
-    public func addAction(interval: Int, action: @escaping () -> Void) {
+    public func addAction(interval: Int, action: @escaping ActionClosure) {
         regularActions.append((interval: interval, action: actInForeground(action)))
     }
-
-    typealias ActionClousre = () -> Void
 
     /**
      Wrap your action with this function to make sure your actions are dispatched inside the app under test
      and not in some other app that the Monkey randomly opened.
      */
-    func actInForeground(_ action: @escaping ActionClousre) -> ActionClousre {
+    func actInForeground(_ action: @escaping ActionClosure) -> ActionClosure {
         return {
             guard #available(iOS 9.0, *) else {
                 action()
                 return
             }
-            let closure: ActionClousre = {
+            let closure: ActionClosure = {
                 if XCUIApplication().state != .runningForeground {
                     XCUIApplication().activate()
                 }
