@@ -28,11 +28,30 @@ extension Monkey {
         return generatorClass.sharedGenerator()
     }
 
-    private var isInForeground: Bool {
-        if #available(iOS 9.0, *) {
-            return XCUIApplication().state == .runningForeground
+    typealias ActionClousre = () -> Void
+
+    /**
+     Wrap your action with this function to make sure your actions are dispatched inside the app under test
+     and not in some other app that the Monkey randomly opened.
+     */
+    func actInForeground(_ action: @escaping ActionClousre) -> ActionClousre {
+        return {
+            guard #available(iOS 9.0, *) else {
+                action()
+                return
+            }
+            let closure: ActionClousre = {
+                if XCUIApplication().state != .runningForeground {
+                    XCUIApplication().activate()
+                }
+                action()
+            }
+            if Thread.isMainThread {
+                closure()
+            } else {
+                DispatchQueue.main.async(execute: closure)
+            }
         }
-        return true
     }
 
     /**
@@ -67,8 +86,7 @@ extension Monkey {
      */
     public func addXCTestTapAction(weight: Double, multipleTapProbability: Double = 0.05,
                                    multipleTouchProbability: Double = 0.05) {
-        addAction(weight: weight) { [weak self] in
-            guard self?.isInForeground == true else { return }
+        addAction(weight: weight, action: actInForeground { [weak self] in
             let numberOfTaps: UInt
             if self!.r.randomDouble() < multipleTapProbability {
                 numberOfTaps = UInt(self!.r.randomUInt32() % 2) + 2
@@ -90,12 +108,11 @@ extension Monkey {
             let semaphore = DispatchSemaphore(value: 0)
             self!.sharedXCEventGenerator.tapAtTouchLocations(locations,
                                                              numberOfTaps: numberOfTaps,
-                                                             orientation: orientationValue) { [weak self] in
-                                                                self?.reactivateApplicationIfNeeded()
+                                                             orientation: orientationValue) {
                                                                 semaphore.signal()
             }
             semaphore.wait()
-        }
+        })
     }
 
     /**
@@ -108,18 +125,15 @@ extension Monkey {
      of all relative probabilities.
      */
     public func addXCTestLongPressAction(weight: Double) {
-        addAction(weight: weight) { [weak self] in
-            guard self?.isInForeground == true else { return }
-
+        addAction(weight: weight, action: actInForeground { [weak self] in
             let point = self!.randomPoint()
             let semaphore = DispatchSemaphore(value: 0)
             self!.sharedXCEventGenerator.pressAtPoint(point, forDuration: 0.5,
-                                                      orientation: orientationValue) { [weak self] in
-                                                        self?.reactivateApplicationIfNeeded()
+                                                      orientation: orientationValue) {
                                                         semaphore.signal()
             }
             semaphore.wait()
-        }
+        })
     }
 
     /**
@@ -132,9 +146,7 @@ extension Monkey {
      of all relative probabilities.
      */
     public func addXCTestDragAction(weight: Double) {
-        addAction(weight: weight) { [weak self] in
-            guard self?.isInForeground == true else { return }
-
+        addAction(weight: weight, action: actInForeground { [weak self] in
             let start = self!.randomPointAvoidingPanelAreas()
             let end = self!.randomPoint()
 
@@ -144,12 +156,11 @@ extension Monkey {
                                                       liftAtPoint: end,
                                                       velocity: 1000,
                                                       orientation: orientationValue,
-                                                      name: "Monkey drag" as NSString) { [weak self] in
-                                                        self?.reactivateApplicationIfNeeded()
+                                                      name: "Monkey drag" as NSString) {
                                                         semaphore.signal()
             }
             semaphore.wait()
-        }
+        })
     }
     
     /**
@@ -162,9 +173,7 @@ extension Monkey {
      of all relative probabilities.
      */
     public func addXCTestPinchCloseAction(weight: Double) {
-        addAction(weight: weight) { [weak self] in
-            guard self?.isInForeground == true else { return }
-
+        addAction(weight: weight, action: actInForeground { [weak self] in
             let rect = self!.randomRect(sizeFraction: 2)
             let scale = 1 / CGFloat(self!.r.randomDouble() * 4 + 1)
 
@@ -172,12 +181,11 @@ extension Monkey {
             self!.sharedXCEventGenerator.pinchInRect(rect,
                                                      withScale: scale,
                                                      velocity: 1,
-                                                     orientation: orientationValue) { [weak self] in
-                                                        self?.reactivateApplicationIfNeeded()
+                                                     orientation: orientationValue) {
                                                         semaphore.signal()
             }
             semaphore.wait()
-        }
+        })
     }
 
     /**
@@ -190,9 +198,7 @@ extension Monkey {
      of all relative probabilities.
      */
     public func addXCTestPinchOpenAction(weight: Double) {
-        addAction(weight: weight) { [weak self] in
-            guard self?.isInForeground == true else { return }
-
+        addAction(weight: weight, action: actInForeground { [weak self] in
             let rect = self!.randomRect(sizeFraction: 2)
             let scale = CGFloat(self!.r.randomDouble() * 4 + 1)
 
@@ -200,12 +206,11 @@ extension Monkey {
             self!.sharedXCEventGenerator.pinchInRect(rect,
                                                      withScale: scale,
                                                      velocity: 3,
-                                                     orientation: orientationValue) { [weak self] in
-                                                        self?.reactivateApplicationIfNeeded()
+                                                     orientation: orientationValue) {
                                                         semaphore.signal()
             }
             semaphore.wait()
-        }
+        })
     }
 
     /**
@@ -219,9 +224,7 @@ extension Monkey {
      of all relative probabilities.
      */
     public func addXCTestRotateAction(weight: Double) {
-        addAction(weight: weight) { [weak self] in
-            guard self?.isInForeground == true else { return }
-
+        addAction(weight: weight, action: actInForeground { [weak self] in
             let rect = self!.randomRect(sizeFraction: 2)
             let angle = CGFloat(self!.r.randomDouble() * 2 * 3.141592)
 
@@ -229,12 +232,11 @@ extension Monkey {
             self!.sharedXCEventGenerator.rotateInRect(rect,
                                                       withRotation: angle,
                                                       velocity: 5,
-                                                      orientation: orientationValue) { [weak self] in
-                                                        self?.reactivateApplicationIfNeeded()
+                                                      orientation: orientationValue) {
                                                         semaphore.signal()
             }
             semaphore.wait()
-        }
+        })
     }
 
     /**
@@ -247,9 +249,7 @@ extension Monkey {
      of all relative probabilities.
      */
     public func addXCTestOrientationAction(weight: Double) {
-        addAction(weight: weight) { [weak self] in
-            guard self?.isInForeground == true else { return }
-
+        addAction(weight: weight, action: actInForeground { [weak self] in
             let orientations: [UIDeviceOrientation] = [
                 .portrait,
                 .portraitUpsideDown,
@@ -261,17 +261,7 @@ extension Monkey {
 
             let index = Int(self!.r.randomUInt32() % UInt32(orientations.count))
             orientationValue = orientations[index]
-        }
-    }
-
-    private func reactivateApplicationIfNeeded() {
-        if #available(iOS 9.0, *) {
-            DispatchQueue.main.async {
-                if XCUIApplication().state != .runningForeground{
-                    XCUIApplication().activate()
-                }
-            }
-        }
+        })
     }
 
 }
