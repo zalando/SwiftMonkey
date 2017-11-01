@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import XCTest
 
 /**
     A general-purpose class for implementing randomised
@@ -193,7 +194,7 @@ public class Monkey {
     */
     public func addAction(weight: Double, action: @escaping () -> Void) {
         totalWeight += weight
-        randomActions.append((accumulatedWeight: totalWeight, action: action))
+        randomActions.append((accumulatedWeight: totalWeight, action: actInForeground(action)))
     }
 
     /**
@@ -206,7 +207,33 @@ public class Monkey {
           is generated.
     */
     public func addAction(interval: Int, action: @escaping () -> Void) {
-        regularActions.append((interval: interval, action: action))
+        regularActions.append((interval: interval, action: actInForeground(action)))
+    }
+
+    typealias ActionClousre = () -> Void
+
+    /**
+     Wrap your action with this function to make sure your actions are dispatched inside the app under test
+     and not in some other app that the Monkey randomly opened.
+     */
+    func actInForeground(_ action: @escaping ActionClousre) -> ActionClousre {
+        return {
+            guard #available(iOS 9.0, *) else {
+                action()
+                return
+            }
+            let closure: ActionClousre = {
+                if XCUIApplication().state != .runningForeground {
+                    XCUIApplication().activate()
+                }
+                action()
+            }
+            if Thread.isMainThread {
+                closure()
+            } else {
+                DispatchQueue.main.async(execute: closure)
+            }
+        }
     }
 
     /**
