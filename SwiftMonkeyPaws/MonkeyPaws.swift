@@ -131,12 +131,12 @@ public class MonkeyPaws: NSObject, CALayerDelegate {
         let originalMethod = class_getInstanceMethod(UIApplication.self, originalSelector)
         let swizzledMethod = class_getInstanceMethod(UIApplication.self, swizzledSelector)
         
-        let didAddMethod = class_addMethod(UIApplication.self, originalSelector, method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod))
+        let didAddMethod = class_addMethod(UIApplication.self, originalSelector, method_getImplementation(swizzledMethod!), method_getTypeEncoding(swizzledMethod!))
         
         if didAddMethod {
-            class_replaceMethod(UIApplication.self, swizzledSelector, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod))
+            class_replaceMethod(UIApplication.self, swizzledSelector, method_getImplementation(originalMethod!), method_getTypeEncoding(originalMethod!))
         } else {
-            method_exchangeImplementations(originalMethod, swizzledMethod)
+            method_exchangeImplementations(originalMethod!, swizzledMethod!)
         }
 
         return true
@@ -353,7 +353,7 @@ private struct WeakReference<T: AnyObject> {
 }
 
 extension UIApplication {
-    func monkey_sendEvent(_ event: UIEvent) {
+    @objc func monkey_sendEvent(_ event: UIEvent) {
         for weakTrack in MonkeyPaws.tappingTracks {
             if let track = weakTrack.value {
                 track.append(event: event)
