@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "SwiftMonkey"
-  s.version      = "1.1.0"
+  s.version      = "1.1.1"
   s.summary      = "Monkey testing framework for iOS apps"
   s.description  = <<-DESC
                    A framework for generating randomised user
