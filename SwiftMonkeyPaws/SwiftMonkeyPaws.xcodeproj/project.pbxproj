@@ -7,11 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		189807B0202338A300B9F544 /* UIColor+MonkeyPaws.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189807AF202338A300B9F544 /* UIColor+MonkeyPaws.swift */; };
+		189807B920279AD800B9F544 /* MonkeyPawDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189807B820279AD800B9F544 /* MonkeyPawDrawer.swift */; };
 		C929B55C1DD0B7C9004B256F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C929B55B1DD0B7C9004B256F /* UIKit.framework */; };
 		OBJ_18 /* MonkeyPaws.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* MonkeyPaws.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		189807AF202338A300B9F544 /* UIColor+MonkeyPaws.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+MonkeyPaws.swift"; sourceTree = "<group>"; };
+		189807B820279AD800B9F544 /* MonkeyPawDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonkeyPawDrawer.swift; sourceTree = SOURCE_ROOT; };
 		C929B55B1DD0B7C9004B256F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C943263D1DDB123A0038A891 /* SwiftMonkeyPaws.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = SwiftMonkeyPaws.podspec; path = ../SwiftMonkeyPaws.podspec; sourceTree = "<group>"; };
 		OBJ_12 /* SwiftMonkeyPaws.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftMonkeyPaws.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -31,6 +35,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		189807AE202338A300B9F544 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				189807AF202338A300B9F544 /* UIColor+MonkeyPaws.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		C929B55A1DD0B7C9004B256F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -70,6 +82,7 @@
 			isa = PBXGroup;
 			children = (
 				OBJ_8 /* SwiftMonkeyPaws */,
+				189807AE202338A300B9F544 /* Extensions */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -78,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				OBJ_9 /* MonkeyPaws.swift */,
+				189807B820279AD800B9F544 /* MonkeyPawDrawer.swift */,
 			);
 			name = SwiftMonkeyPaws;
 			path = .;
@@ -138,6 +152,8 @@
 			buildActionMask = 0;
 			files = (
 				OBJ_18 /* MonkeyPaws.swift in Sources */,
+				189807B0202338A300B9F544 /* UIColor+MonkeyPaws.swift in Sources */,
+				189807B920279AD800B9F544 /* MonkeyPawDrawer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
