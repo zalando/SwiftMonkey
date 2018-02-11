@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		183234262030AF3A00B4C6DD /* MonkeyPaws+Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183234252030AF3A00B4C6DD /* MonkeyPaws+Configuration.swift */; };
 		189807B0202338A300B9F544 /* UIColor+MonkeyPaws.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189807AF202338A300B9F544 /* UIColor+MonkeyPaws.swift */; };
 		189807B920279AD800B9F544 /* MonkeyPawDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189807B820279AD800B9F544 /* MonkeyPawDrawer.swift */; };
 		C929B55C1DD0B7C9004B256F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C929B55B1DD0B7C9004B256F /* UIKit.framework */; };
@@ -14,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		183234252030AF3A00B4C6DD /* MonkeyPaws+Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MonkeyPaws+Configuration.swift"; sourceTree = "<group>"; };
 		189807AF202338A300B9F544 /* UIColor+MonkeyPaws.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+MonkeyPaws.swift"; sourceTree = "<group>"; };
 		189807B820279AD800B9F544 /* MonkeyPawDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonkeyPawDrawer.swift; sourceTree = SOURCE_ROOT; };
 		C929B55B1DD0B7C9004B256F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -39,6 +41,7 @@
 			isa = PBXGroup;
 			children = (
 				189807AF202338A300B9F544 /* UIColor+MonkeyPaws.swift */,
+				183234252030AF3A00B4C6DD /* MonkeyPaws+Configuration.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -153,6 +156,7 @@
 			files = (
 				OBJ_18 /* MonkeyPaws.swift in Sources */,
 				189807B0202338A300B9F544 /* UIColor+MonkeyPaws.swift in Sources */,
+				183234262030AF3A00B4C6DD /* MonkeyPaws+Configuration.swift in Sources */,
 				189807B920279AD800B9F544 /* MonkeyPawDrawer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -34,56 +34,12 @@ import UIKit
 
 public class MonkeyPaws: NSObject, CALayerDelegate {
 
-    public struct Configuration {
-        // Customise the appearance of the paws
-        public struct Paws {
-
-            /// Define the colour of the Paws
-            ///
-            /// - randomized: random colour for each paw
-            /// - constant: same colour for the paws
-            enum Colour {
-                case randomized
-                case constant(UIColor)
-            }
-            // Colour of the paws
-            let colour: Colour
-
-            // Brightness of a particular paw
-            let brightness: CGFloat
-
-            // Maximum visible paws at one time
-            let maxShown: Int
-
-            public static let `default`: Paws = Paws(colour: .randomized,
-                                                     brightness: 0.5,
-                                                     maxShown: 15)
-        }
-
-        public struct Radius {
-
-            /// Radius of the cross draw upon canceling a touch event
-            let cross: CGFloat
-
-            /// Radius of the circle draw upon ending a touch event
-            let circle: CGFloat
-
-            public static let `default`: Radius = Radius(cross: 7,
-                                                  circle: 7)
-        }
-
-        let paws: Paws
-        let radius: Radius
-
-        public static let `default`: MonkeyPaws.Configuration = MonkeyPaws.Configuration(paws: Paws.default, radius: Radius.default)
-    }
-
     public typealias BezierPathDrawer = () -> UIBezierPath
 
     private var gestures: [(hash: Int?, gesture: Gesture)] = []
     private weak var view: UIView?
 
-    let configuration: Configuration
+    let configuration: MonkeyPaws.Configuration
     let bezierPathDrawer: BezierPathDrawer
     let layer = CALayer()
 
@@ -109,7 +65,7 @@ public class MonkeyPaws: NSObject, CALayerDelegate {
     */
     public init(view: UIView,
                 tapUIApplication: Bool = true,
-                configuration: Configuration = Configuration.default,
+                configuration: Configuration = Configuration(),
                 bezierPathDrawer: @escaping BezierPathDrawer = MonkeyPawDrawer.monkeyHandPath) {
         self.configuration = configuration
         self.bezierPathDrawer = bezierPathDrawer
