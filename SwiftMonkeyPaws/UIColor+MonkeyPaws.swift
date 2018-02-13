@@ -8,7 +8,7 @@
 import UIKit
 
 extension UIColor {
-    func colorWithBrightness(brightness: CGFloat) -> UIColor {
+    func color(WithBrightness brightness: CGFloat) -> UIColor {
         var H: CGFloat = 0
         var S: CGFloat = 0
         var B: CGFloat = 0

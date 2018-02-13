@@ -39,7 +39,7 @@ public class MonkeyPaws: NSObject, CALayerDelegate {
     private var gestures: [(hash: Int?, gesture: Gesture)] = []
     private weak var view: UIView?
 
-    let configuration: MonkeyPaws.Configuration
+    let configuration: Configuration
     let bezierPathDrawer: BezierPathDrawer
     let layer = CALayer()
 
@@ -124,11 +124,11 @@ public class MonkeyPaws: NSObject, CALayerDelegate {
                 gesture.extend(to: point)
             }
         } else {
-            if gestures.count > self.configuration.paws.maxShown {
+            if gestures.count > configuration.paws.maxShown {
                 gestures.removeFirst()
             }
 
-            gestures.append((hash: touchHash, gesture: Gesture(from: point, inLayer: layer, configuration: self.configuration, bezierPathDrawer: self.bezierPathDrawer)))
+            gestures.append((hash: touchHash, gesture: Gesture(from: point, inLayer: layer, configuration: configuration, bezierPathDrawer: bezierPathDrawer)))
 
             for i in 0 ..< gestures.count {
                 let number = gestures.count - i
@@ -187,33 +187,20 @@ private class Gesture {
     var pathLayer: CAShapeLayer?
     var endLayer: CAShapeLayer?
 
-    let configuration: MonkeyPaws.Configuration
-    let bezierPathDrawer: MonkeyPaws.BezierPathDrawer
+    let configuration: Configuration
 
     private static var counter: Int = 0
 
-    init(from: CGPoint, inLayer: CALayer, configuration: MonkeyPaws.Configuration, bezierPathDrawer: @escaping MonkeyPaws.BezierPathDrawer) {
+    init(from: CGPoint, inLayer: CALayer, configuration: Configuration, bezierPathDrawer: @escaping MonkeyPaws.BezierPathDrawer) {
         self.points = [from]
         self.configuration = configuration
-        self.bezierPathDrawer = bezierPathDrawer
 
         let counter = Gesture.counter
         Gesture.counter += 1
 
-        let angle = 45 * (CGFloat(fmod(Float(counter) * 0.279, 1)) * 2 - 1)
-        let mirrored = counter % 2 == 0
-        let colour: UIColor
-        switch configuration.paws.colour {
-        case .randomized:
-            colour = UIColor(hue: CGFloat(fmod(Float(counter) * 0.391, 1)),
-                             saturation: 1,
-                             brightness: self.configuration.paws.brightness,
-                             alpha: 1)
-        case .constant(let constantColour):
-            colour = constantColour.colorWithBrightness(brightness: self.configuration.paws.brightness)
-        }
+        let colour: UIColor = pawsColor(configuration: configuration.paws, seed: counter)
 
-        startLayer.path = customizePath(self.bezierPathDrawer(), angle: angle, scale: 1, mirrored: mirrored).cgPath
+        startLayer.path = customize(path: bezierPathDrawer(), seed: counter).cgPath
 
         startLayer.strokeColor = colour.cgColor
         startLayer.fillColor = nil
@@ -241,9 +228,9 @@ private class Gesture {
         didSet {
             numberLayer.string = String(number)
 
-            let fraction = Float(number - 1) / Float(self.configuration.paws.maxShown)
+            let fraction = Float(number - 1) / Float(configuration.paws.maxShown)
             let alpha = sqrt(1 - fraction)
-            self.containerLayer.opacity = alpha
+            containerLayer.opacity = alpha
         }
     }
 
@@ -299,7 +286,7 @@ private class Gesture {
         layer.fillColor = nil
         layer.position = at
 
-        let path = circlePath(radius: self.configuration.radius.circle)
+        let path = circlePath(radius: configuration.radius.circle)
         layer.path = path.cgPath
 
         containerLayer.addSublayer(layer)
@@ -319,18 +306,30 @@ private class Gesture {
         layer.fillColor = nil
         layer.position = at
 
-        let path = crossPath(radius: self.configuration.radius.cross)
+        let path = crossPath(radius: configuration.radius.cross)
         layer.path = path.cgPath
 
         containerLayer.addSublayer(layer)
         endLayer = layer
     }
+
+    func pawsColor(configuration: Configuration.Paws, seed: Int) -> UIColor {
+        switch configuration.color {
+        case .randomized:
+            return UIColor(hue: CGFloat(fmod(Float(seed) * 0.391, 1)),
+                           saturation: 1,
+                           brightness: configuration.brightness,
+                           alpha: 1)
+        case .constant(let constantColour):
+            return constantColour.color(WithBrightness: configuration.brightness)
+        }
+    }
 }
 
-private func customizePath(_ path: UIBezierPath, angle: CGFloat, scale: CGFloat, mirrored: Bool) -> UIBezierPath {
-    path.apply(CGAffineTransform(translationX: 0.5, y: 0))
+private func customize(path: UIBezierPath, seed: Int) -> UIBezierPath {
 
-    path.apply(CGAffineTransform(scaleX: scale, y: scale))
+    let angle = 45 * (CGFloat(fmod(Float(seed) * 0.279, 1)) * 2 - 1)
+    let mirrored = seed % 2 == 0
 
     if mirrored {
         path.apply(CGAffineTransform(scaleX: -1, y: 1))
