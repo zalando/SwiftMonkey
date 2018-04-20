@@ -167,6 +167,14 @@ but any time after you have a UIWindow will do. It also only
 instatiates the visualisation if a certain command line flag
 is passed, so that it can be enabled only for test runs.)
 
+Using command line flags, If you want to enable MonkeyPaws on your
+test case file you can add the following on yout testMonkey function:
+
+````swift
+  let application = XCUIApplication()
+  application.launchArguments = ["--MonkeyPaws"]
+````
+
 This call will swizzle some methods in UIApplication to capture
 UIEvents. If you would rather not do this, or if you already have
 a source of UIEvents, you can pass the following option to `init`
