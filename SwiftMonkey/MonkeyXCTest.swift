@@ -34,7 +34,7 @@ extension Monkey {
                 let alert = application.alerts.element(boundBy: i)
                 let buttons = alert.descendants(matching: .button)
                 XCTAssertNotEqual(buttons.count, 0, "No buttons in alert")
-                let index = UInt(self!.r.randomUInt32() % UInt32(buttons.count))
+                let index = self!.r.randomInt(lessThan: buttons.count)
                 let button = buttons.element(boundBy: index)
                 button.tap()
             }
