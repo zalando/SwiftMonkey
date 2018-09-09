@@ -62,12 +62,12 @@ that you've named your main app and test targets "App" and "Tests", you
 can use something like this in your `Podfile`:
 
 ````ruby
-target "App" do
-    pod "SwiftMonkeyPaws", "~> 1.0"
+target 'App' do
+    pod "SwiftMonkeyPaws", '~> 2.1.0'
 end
 
-target "Tests" do
-    pod "SwiftMonkey", "~> 1.0"
+target 'Tests' do
+    pod 'SwiftMonkey', '~> 2.1.0'
 end
 ````
 
