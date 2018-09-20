@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C2D5C6DC2154368700E7F43D /* SwiftMonkey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C984D58E1DDF21C0003D8044 /* SwiftMonkey.framework */; };
 		C929B5351DD0A764004B256F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C929B5341DD0A764004B256F /* AppDelegate.swift */; };
 		C929B5371DD0A764004B256F /* ClickyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C929B5361DD0A764004B256F /* ClickyViewController.swift */; };
 		C929B5391DD0A764004B256F /* BananaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C929B5381DD0A764004B256F /* BananaViewController.swift */; };
@@ -16,7 +17,6 @@
 		C929B54C1DD0A764004B256F /* MonkeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C929B54B1DD0A764004B256F /* MonkeyTests.swift */; };
 		C984D5971DDF2241003D8044 /* SwiftMonkeyPaws.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C984D5931DDF21CC003D8044 /* SwiftMonkeyPaws.framework */; };
 		C984D5981DDF2241003D8044 /* SwiftMonkeyPaws.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C984D5931DDF21CC003D8044 /* SwiftMonkeyPaws.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C984D59F1DDF22EA003D8044 /* SwiftMonkey.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C984D58E1DDF21C0003D8044 /* SwiftMonkey.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,25 +69,6 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C984D59E1DDF22D9003D8044 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				C984D59F1DDF22EA003D8044 /* SwiftMonkey.framework in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C9CB3B751DDB61F6001C561B /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -120,12 +101,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2D5C6DC2154368700E7F43D /* SwiftMonkey.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C2D5C6DB2154368700E7F43D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C929B5281DD0A764004B256F = {
 			isa = PBXGroup;
 			children = (
@@ -135,6 +124,7 @@
 				C929B5321DD0A764004B256F /* Products */,
 				C929B5621DD0C4A1004B256F /* SwiftMonkey.xcodeproj */,
 				C929B5881DD0CD89004B256F /* SwiftMonkeyPaws.xcodeproj */,
+				C2D5C6DB2154368700E7F43D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -215,8 +205,6 @@
 				C929B5431DD0A764004B256F /* Sources */,
 				C929B5441DD0A764004B256F /* Frameworks */,
 				C929B5451DD0A764004B256F /* Resources */,
-				C9CB3B751DDB61F6001C561B /* CopyFiles */,
-				C984D59E1DDF22D9003D8044 /* CopyFiles */,
 			);
 			buildRules = (
 			);
