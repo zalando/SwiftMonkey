@@ -210,7 +210,7 @@ private class Gesture {
         numberLayer.string = "1"
         numberLayer.bounds = CGRect(x:0, y: 0, width: 32, height: 13)
         numberLayer.fontSize = 10
-        numberLayer.alignmentMode = kCAAlignmentCenter
+        numberLayer.alignmentMode = CATextLayerAlignmentMode.center
         numberLayer.foregroundColor = colour.cgColor
         numberLayer.position = from
         numberLayer.contentsScale = UIScreen.main.scale
@@ -254,7 +254,7 @@ private class Gesture {
 
             let maskLayer = CAShapeLayer()
             maskLayer.path = maskPath
-            maskLayer.fillRule = kCAFillRuleEvenOdd
+            maskLayer.fillRule = CAShapeLayerFillRule.evenOdd
             maskLayer.position = self.startLayer.position
             newLayer.mask = maskLayer
 

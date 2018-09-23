@@ -15,5 +15,6 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '8.0'
   s.source       = { :git => "https://github.com/zalando/SwiftMonkey.git", :tag => "#{s.version}" }
   s.source_files = "SwiftMonkeyPaws/*.swift"
+  s.swift_version = "4.2"
   s.exclude_files = "SwiftMonkeyPaws/Package.swift"
 end
