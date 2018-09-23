@@ -373,7 +373,7 @@ extension UIApplication {
 
 extension CGRect {
     public init(centre: CGPoint, size: CGSize) {
-        self.origin = CGPoint(x: centre.x - size.width / 2, y: centre.y - size.height / 2)
-        self.size = size
+        self.init(origin: CGPoint(x: centre.x - size.width / 2, y: centre.y - size.height / 2),
+                  size: size)
     }
 }
