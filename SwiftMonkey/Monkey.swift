@@ -217,23 +217,24 @@ public class Monkey {
      and not in some other app that the Monkey randomly opened.
      */
     func actInForeground(_ action: @escaping ActionClosure) -> ActionClosure {
-        return {
-            guard #available(iOS 9.0, *) else {
-                action()
-                return
-            }
-            let closure: ActionClosure = {
-                if XCUIApplication().state != .runningForeground {
-                    XCUIApplication().activate()
-                }
-                action()
-            }
-            if Thread.isMainThread {
-                closure()
-            } else {
-                DispatchQueue.main.async(execute: closure)
-            }
-        }
+		guard #available(iOS 9.0, *) else {
+			return action
+		}
+		
+		let app = XCUIApplication()
+		let closure: ActionClosure = {
+			if app.state != .runningForeground {
+				app.activate()
+			}
+			action()
+		}
+		return {
+			if Thread.isMainThread {
+				closure()
+			} else {
+				DispatchQueue.main.async(execute: closure)
+			}
+		}
     }
 
     /**
