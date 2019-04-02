@@ -50,7 +50,7 @@ specific command line flag is used.
 
 ### Requirements
 
-SwiftMonkey uses Swift 4.0. It has no dependencies other than
+SwiftMonkey uses Swift 5.0. It has no dependencies other than
 iOS itself (8.0 and up should work). SwiftMonkeyPaws doesn't
 have any dependencies, either; you can even use on its own,
 without SwiftMonkey.

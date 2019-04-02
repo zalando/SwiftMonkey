@@ -17,6 +17,6 @@ Pod::Spec.new do |s|
   s.source_files = "SwiftMonkey/*.swift"
   s.exclude_files = "SwiftMonkey/Package.swift"
   s.framework    = "XCTest"
-  s.swift_version = "4.2"
+  s.swift_version = "5.0"
   s.pod_target_xcconfig = { 'ENABLE_BITCODE' => 'NO' }
 end

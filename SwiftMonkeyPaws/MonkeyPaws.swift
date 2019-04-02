@@ -107,7 +107,7 @@ public class MonkeyPaws: NSObject, CALayerDelegate {
         let touchHash = touch.hash
         let point = touch.location(in: view)
 
-        let index = gestures.index(where: { (gestureHash, _) -> Bool in
+        let index = gestures.firstIndex(where: { (gestureHash, _) -> Bool in
             return gestureHash == touchHash
         })
 
@@ -164,7 +164,7 @@ public class MonkeyPaws: NSObject, CALayerDelegate {
     private func bumpAndDisplayLayer() {
         guard let superlayer = layer.superlayer else { return }
         guard let layers = superlayer.sublayers else { return }
-        guard let index = layers.index(of: layer) else { return }
+        guard let index = layers.firstIndex(of: layer) else { return }
 
         if index != layers.count - 1 {
             layer.removeFromSuperlayer()
