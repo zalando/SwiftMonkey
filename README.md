@@ -63,7 +63,7 @@ can use something like this in your `Podfile`:
 
 ````ruby
 target 'App' do
-    pod "SwiftMonkeyPaws", '~> 2.1.0'
+    pod 'SwiftMonkeyPaws', '~> 2.1.0'
 end
 
 target 'Tests' do
