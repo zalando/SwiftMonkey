@@ -15,7 +15,11 @@ import XCTest
 */
 @available(iOS 9.0, *)
 extension Monkey {
-
+    /// Generates a random `CGVector` inside the frame of the app.
+    public func randomOffset() -> CGVector {
+        let point = randomPoint()
+        return CGVector(dx: point.x, dy: point.y)
+    }
     /**
         Add an action that checks, at a fixed interval,
         if an alert is being displayed, and if so, selects
@@ -38,6 +42,60 @@ extension Monkey {
                 let button = buttons.element(boundBy: index)
                 button.tap()
             }
+        }
+    }
+    
+    public func addDefaultXCTestPublicActions(app: XCUIApplication) {
+        addXCTestPublicTapAction(app: app, weight: 25)
+        addXCTestPublicLongPressAction(app: app, weight: 1)
+        addXCTestPublicDragAction(app: app, weight: 1)
+    }
+    
+    
+    /// Add an action that generates a tap, with a possibility for double taps, using the public XCTest API.
+    /// - Parameter app: The application proxy.
+    /// - Parameter weight: The relative probability of this event being generated. Can be any value larger than zero. Probabilities
+    /// will be normalised to the sum of all relative probabilities.
+    /// - Parameter doubleTapProbability: Probability that a double tap event is used. Between 0 and 1.
+    public func addXCTestPublicTapAction(app: XCUIApplication,
+                                         weight: Double,
+                                         doubleTapProbability: Double = 0.05) {
+        addAction(weight: weight) { [unowned self] in
+            let doubleTap = self.r.randomDouble() < doubleTapProbability
+            let coordinate = app.coordinate(withNormalizedOffset: .zero).withOffset(self.randomOffset())
+            
+            if doubleTap {
+                coordinate.doubleTap()
+            } else {
+                coordinate.tap()
+            }
+        }
+    }
+    
+    
+    /// Add an action that generates a long press event using the public XCTest API.
+    /// - Parameter app: The application proxy.
+    /// - Parameter weight: The relative probability of this event being generated. Can be any value larger than zero. Probabilities
+    /// will be normalised to the sum of all relative probabilities.
+    public func addXCTestPublicLongPressAction(app: XCUIApplication,
+                                               weight: Double) {
+        addAction(weight: weight) { [unowned self] in
+            let coordinate = app.coordinate(withNormalizedOffset: .zero).withOffset(self.randomOffset())
+            coordinate.press(forDuration: 0.5)
+        }
+    }
+    
+
+    /// Add an action that generates a drag event from one random screen position to another using the public XCTest API.
+    /// - Parameter app: The application proxy.
+    /// - Parameter weight: The relative probability of this event being generated. Can be any value larger than zero. Probabilities
+    /// will be normalised to the sum of all relative probabilities.
+    public func addXCTestPublicDragAction(app: XCUIApplication,
+                                          weight: Double) {
+        addAction(weight: weight) { [unowned self] in
+            let startCoordinate = app.coordinate(withNormalizedOffset: .zero).withOffset(self.randomOffset())
+            let endCoordinate = app.coordinate(withNormalizedOffset: .zero).withOffset(self.randomOffset())
+            startCoordinate.press(forDuration: 0.2, thenDragTo: endCoordinate)
         }
     }
 }
