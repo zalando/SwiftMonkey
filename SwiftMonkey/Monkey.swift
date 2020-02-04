@@ -61,7 +61,10 @@ import XCTest
 */
 public class Monkey {
     public typealias ActionClosure = () -> Void
-
+    
+    public var topPanelPadding: CGFloat = 20
+    public var bottomPanelPadding: CGFloat = 20
+    
     var r: Random
     let frame: CGRect
 
@@ -278,9 +281,7 @@ public class Monkey {
         that trigger a panel pull-out.
     */
     public func randomPointAvoidingPanelAreas() -> CGPoint {
-        let topHeight: CGFloat = 20
-        let bottomHeight: CGFloat = 20
-        let frameWithoutTopAndBottom = CGRect(x: 0, y: topHeight, width: frame.width, height: frame.height - topHeight - bottomHeight)
+        let frameWithoutTopAndBottom = CGRect(x: 0, y: topPanelPadding, width: frame.width, height: frame.height - topPanelPadding - bottomPanelPadding)
         return randomPoint(inRect: frameWithoutTopAndBottom)
     }
 
