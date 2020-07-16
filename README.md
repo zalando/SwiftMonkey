@@ -63,11 +63,11 @@ can use something like this in your `Podfile`:
 
 ````ruby
 target 'App' do
-    pod 'SwiftMonkeyPaws', '~> 2.1.0'
+    pod 'SwiftMonkeyPaws', '2.1.1'
 end
 
 target 'Tests' do
-    pod 'SwiftMonkey', '~> 2.1.0'
+    pod 'SwiftMonkey', '2.1.1'
 end
 ````
 
@@ -120,10 +120,10 @@ func testMonkey() {
         // monkey.addDefaultXCTestPrivateActions()
 
         // after Xcode 10.1 We can only use public API
-        monkey.addDefaultXCTestPublicActions()
+        // monkey.addDefaultXCTestPublicActions()
 
         // UIAutomation actions seem to work only on the simulator.
-        //monkey.addDefaultUIAutomationActions()
+        monkey.addDefaultUIAutomationActions()
 
         // Occasionally, use the regular XCTest functionality
         // to check if an alert is shown, and click a random
