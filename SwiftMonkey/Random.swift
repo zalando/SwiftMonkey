@@ -21,7 +21,7 @@ struct Random {
     }
 
     init(seed: UInt32) {
-        self.init(seed: 0, sequence: 0)
+        self.init(seed: seed, sequence: 0)
     }
 
     init(seed: UInt32, sequence: UInt32) {
